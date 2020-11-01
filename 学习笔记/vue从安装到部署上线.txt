@@ -1,0 +1,4 @@
+1.vue脚手架
+（1）vue init webpack 项目名称
+（2）cd 项目
+（3）运行 npm run dev

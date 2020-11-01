@@ -1,0 +1,27 @@
+1.确定使用框架/插件
+（1）移动端适配：https://baijiahao.baidu.com/s?id=1667309311501005090&wfr=spider&for=pc
+（2）ui库：vant
+    （2.1）Vue移动端UI组件库:https：//www.jianshu.com/p/c3c671787d1d
+    <1>导航栏（顶部）、标签栏（底部）
+    <2>Loading加载、骨架屏、遮罩层
+    <3>滑动组件：List列表（优化:划过屏幕顶部列表要清除）
+    <4>
+
+    （2.2）使用：
+    <1> 按需引入组件
+// 在babelrc中配置
+   "plugins": [
+    "transform-vue-jsx",
+    "transform-runtime",
+    ["import", [
+      {
+        "libraryName":"vant",
+        "style":true
+      }
+      ]
+    ]
+  ]     
+main.js引用组件
+import { Button } from 'vant'
+Vue.use(Button)
+（2.3）index.html配置安全区

@@ -1,0 +1,120 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    color: #666;
+}
+
+.ellipsis {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 隐藏滚动条 */
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.border_radius_5 {
+    border-radius: 5px;
+}
+
+/* 选中 */
+
+.padding_10 {
+    padding: 10px;
+}
+
+.choice {
+    color: #1989fa!important;
+}
+
+.bg_blue {
+    background: #3190e8;
+}
+
+.span_white {
+    color: #fff;
+}
+
+.bg_fff {
+    background: #fff;
+}
+
+/* 公共样式 */
+
+/* 分割条 */
+
+.split {
+    width: 100%;
+    background: #e4e4e4;
+    height: 10px;
+}
+
+/* 窗口布局 固定底部 */
+
+.fixed_full {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.relative_full {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.fixed_bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* 弹性布局 */
+
+/* 水平排列 */
+
+.grow_0 {
+    flex-grow: 0;
+}
+
+/* 铺满剩余空间 */
+
+.grow_1 {
+    flex-grow: 1;
+}
+
+.flex_row {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 竖直排列 */
+
+.flex_column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 竖直水平居中 */
+
+.flex_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex_wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

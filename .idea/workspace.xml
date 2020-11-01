@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b5cd1ba3-70c3-445e-88de-4ae3947cd015" name="Default Changelist" comment="Vue与React代码提交">
+      <change afterPath="$PROJECT_DIR$/.idea/Learn.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Untitled-1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/.postcssrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/check-versions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/vue-loader.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/webpack.base.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/webpack.dev.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/build/webpack.prod.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/config/dev.env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/config/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/config/prod.env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/config/test.env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/common/common.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/components/SwiperTA.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/components/TabBottom.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/page/mine.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/page/order.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/page/search.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/page/shop.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/page/taskaway.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/src/router/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/static/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/e2e/custom-assertions/elementCount.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/e2e/nightwatch.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/e2e/runner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/e2e/specs/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/unit/.eslintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/unit/jest.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/unit/setup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/ele-pro/test/unit/specs/HelloWorld.spec.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/.babelrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/COPYING" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/README-en.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/dev-client.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/dev-server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/webpack.base.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/webpack.dev.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/build/webpack.prod.conf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/config/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/confirm1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/confirmOrder.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/elm_ewm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/ewm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/food.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/food.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/login.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/login1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/msite.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/msite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/profile.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/profile.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/search.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/shop_cart.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/screenshots/shop_cart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/alertTip.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/buyCart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/computeTime.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/loading.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/mixin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/ratingStar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/shoplist.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/common/svg.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/footer/footGuide.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/components/header/head.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/config/fetch.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/config/mUtils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/config/rem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/activity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/add_address.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/add_phone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/address_bottom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/bindphone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/description.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/elmlogo.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/expired.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/fenxiang.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/fl.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/hongbao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/icon_loading.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/icon_point.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/jifen.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/no-log.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/qianbao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/qq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/sheng.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/shop_back_svg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/shopback.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/voucher.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/weixin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/images/zhifubao.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/balance/balance.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/balance/children/detail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/benefit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/children/commend.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/children/coupon.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/children/exchange.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/children/hbDescription.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/benefit/children/hbHistory.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/city/city.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/children/addAddress.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/children/children/searchAddress.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/chooseAddress.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/invoice.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/payment.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/remark.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/children/userValidation.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/confirmOrder/confirmOrder.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/download/download.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/find/find.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/food/food.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/forget/forget.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/home/home.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/login/login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/msite/msite.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/order/children/orderDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/order/order.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/points/children/detail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/points/points.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/children/children/address.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/children/children/children/add.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/children/children/children/children/addDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/children/children/setusername.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/children/info.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/profile/profile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/search/search.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/service/children/questionDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/service/service.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/shop/children/children/shopSafe.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/shop/children/foodDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/shop/children/shopDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/shop/shop.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/vipcard/children/invoiceRecord.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/vipcard/children/useCart.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/vipcard/children/vipDescription.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/page/vipcard/vipcard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/plugins/swiper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/router/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/service/getData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/store/action.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/store/getters.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/store/mutation-types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/store/mutations.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/style/common.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/style/mixin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/src/style/swiper.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue2-elm-master/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.txt.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/Java/Java Spring.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/Java/idea连接数据库.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/springboot连接数据库.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/vant思维导图.emmx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/vue-ele开发笔记.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/vue从安装到部署上线.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/~$ringboot连接数据库.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/学习笔记/构建spring项目.emmx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jh3koKZlxrjv3ZKGeIMWeLfIe5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b5cd1ba3-70c3-445e-88de-4ae3947cd015" name="Default Changelist" comment="" />
+      <created>1604242641505</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604242641505</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Vue与React代码提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vue与React代码提交" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1604242914839">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604242914839" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604242766734">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604242766734" />
+  </component>
+</project>

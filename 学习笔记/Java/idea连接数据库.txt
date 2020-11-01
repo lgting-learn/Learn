@@ -1,0 +1,10 @@
+1.数据库密码重置【用户：root 当前密码：115336】
+https://www.cnblogs.com/wsl-/p/10688292.html
+2.cmd登录mysql
+（1）管理员身份登录cmd
+（2）cd D:\mysql-8.0.21-winx64\bin
+（3）启动mysql：net start mysql
+
+连接数据库
+mysql -h localhost -u root -p
+115336

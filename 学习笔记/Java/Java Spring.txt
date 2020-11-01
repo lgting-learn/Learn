@@ -1,0 +1,23 @@
+格式化代码
+Shift+Alt+F
+
+1.无法识别java文件
+（1）点击File  -->  Project Structure->Modules 里 将Content Root删除再添加
+（2）File->setting->maven settings.xml和repository是否已添加
+
+2.spring类没有右侧tab maven报错
+（1）pom.xml右键，点击<Add as Maven Project>
+（2）此时会发现主面板的右侧出现了一个Maven的视图窗口，再重新右键项目，就可以看到maven选项了，view的tool windows中也由了maven选项。
+（3）只是这样还不能解决编译的问题，在maven展开的目录中，双击Lifecycle <compile>，然后会发现面步的下方开始出现重新扫描依赖项的提示
+
+3.SpringCloud 启动时报No active profile set, falling back to default profiles default
+参考：https://www.cnblogs.com/lykbk/p/sewrfefes3453454354.html
+
+4.引入模板引擎
+（1）
+  <!--引入thymeleaf依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+（2）html文件需要写在resources下的templates
