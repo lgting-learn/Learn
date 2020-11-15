@@ -2,8 +2,11 @@
 https://www.cnblogs.com/wsl-/p/10688292.html
 2.cmd登录mysql
 （1）管理员身份登录cmd
-（2）cd D:\mysql-8.0.21-winx64\bin
-（3）启动mysql：net start mysql
+（2）启动mysql：net start mysql
+（3）进入mysql的安装目录下的bin目录：
+        cd D:\mysql-8.0.21-winx64\bin
+（4）进入数据库：mysql -u 用户名 -p 回车
+        mysql  -uroot -p
 
 连接数据库
 mysql -h localhost -u root -p
