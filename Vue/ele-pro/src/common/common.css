@@ -4,7 +4,9 @@
     font-size: 16px;
     color: #666;
 }
-
+[v-cloak] {
+    display: none !important;
+}
 .ellipsis {
     display: block;
     white-space: nowrap;
@@ -20,6 +22,9 @@
 
 .border_radius_5 {
     border-radius: 5px;
+}
+.border_radius_50 {
+    border-radius: 50px;
 }
 
 /* 选中 */
@@ -44,8 +49,22 @@
     background: #fff;
 }
 
-/* 公共样式 */
 
+/* 公共样式 */
+/* 字体大小 */
+.font18{
+    font-size: 18px;
+}
+/* 颜色 */
+.color_org{
+    color: #f60;
+}
+.color_black3{
+    color: #333;
+}
+.color_blue{
+    color:#3190e8;
+}
 /* 分割条 */
 
 .split {
@@ -78,7 +97,12 @@
     right: 0;
     bottom: 0;
 }
-
+.fixed_top{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+}
 /* 弹性布局 */
 
 /* 水平排列 */
@@ -112,9 +136,18 @@
     align-items: center;
     justify-content: center;
 }
-
+/* 竖直居中 */
+.flex_center_col {
+    display: flex;
+    align-items: center;
+}
 .flex_wrap {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+.flex_between{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }

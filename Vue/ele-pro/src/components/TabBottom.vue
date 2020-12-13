@@ -10,7 +10,7 @@
       <van-icon
         :name="item.icon"
         :color="active==index?'#1989fa':''"
-        size="30"
+        size="22"
       />
       <span :class="active==index?'choice':''">
         {{item.title}}
@@ -62,7 +62,7 @@ export default {
 <style>
 .TabBottom {
   /* height: 48px; */
-  padding: 8px 0;
+  padding: 2px 0;
   flex-grow: 0;
   position: relative;
   left: 0;
@@ -70,6 +70,7 @@ export default {
   bottom: 0;
   background: #fff;
   border-top: 1px solid #e4e4e4;
+  position: fixed;
 }
 .TabBottom .tab_item img {
   width: 20px;
@@ -81,5 +82,6 @@ export default {
 }
 .tab_item span {
   color: black;
+  font-size: 14px;
 }
 </style>

@@ -7,7 +7,7 @@
       right-text="按钮"
       left-arrow
      @click="$router.go(-1);"
-      class="bg_blue span_white nav_index"
+      class="bg_blue span_white nav_index fixed_top"
     />
     <div class="order_content">订单</div>
 

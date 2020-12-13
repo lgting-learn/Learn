@@ -42,6 +42,10 @@ module.exports = {
     rules: [
       ...(config.dev.useEslint ? [] : []),
       {
+        test:/\.pug$/,
+        loader: "pug-html-loader"
+       },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
