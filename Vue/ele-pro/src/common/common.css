@@ -1,17 +1,29 @@
 * {
     padding: 0;
     margin: 0;
-    font-size: 16px;
+    font-size: 13px;
     color: #666;
 }
+
 [v-cloak] {
     display: none !important;
 }
+
 .ellipsis {
     display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* 布局位置 */
+
+.abs {
+    position: absolute;
+}
+
+.rel {
+    position: relative;
 }
 
 /* 隐藏滚动条 */
@@ -20,56 +32,271 @@
     display: none;
 }
 
+.border_radius_3 {
+    border-radius: 3px;
+}
+
 .border_radius_5 {
     border-radius: 5px;
 }
+
 .border_radius_50 {
     border-radius: 50px;
 }
 
+.circle {
+    border-radius: 50%;
+}
+
 /* 选中 */
+
+.padding_5_top_bottom {
+    padding: 5px 0;
+}
+
+.padding_5_left_right {
+    padding: 0px 5px;
+}
+
+.padding_3 {
+    padding: 3px;
+}
+
+.padding_5 {
+    padding: 5px;
+}
 
 .padding_10 {
     padding: 10px;
 }
 
+.padding_10_top_bottom {
+    padding: 10px 0;
+}
+
+.padding_10_left_right {
+    padding: 0px 10px;
+}
+
+.padding_20 {
+    padding: 20px;
+}
+
+.padding_20_top_bottom {
+    padding: 20px 0;
+}
+
+.padding_20_left_right {
+    padding: 0px 20px;
+}
+
+.margin_5 {
+    margin: 5px;
+}
+
+.margin_top_5 {
+    margin-top: 5px;
+}
+
+.margin_bottom_5 {
+    margin-bottom: 5px;
+}
+
+.margin_left_5 {
+    margin-left: 5px;
+}
+
+.margin_right_5 {
+    margin-right: 5px;
+}
+
+.margin_10 {
+    margin: 10px;
+}
+
+.margin_top_10 {
+    margin-top: 10px;
+}
+
+.margin_bottom_10 {
+    margin-bottom: 10px;
+}
+
+.margin_left_10 {
+    margin-left: 10px;
+}
+
+.margin_right_10 {
+    margin-right: 10px;
+}
+
+.margin_20 {
+    margin: 20px;
+}
+
+.margin_top_20 {
+    margin-top: 20px;
+}
+
+.margin_bottom_20 {
+    margin-bottom: 20px;
+}
+
+.margin_left_20 {
+    margin-left: 20px;
+}
+
+.margin_right_20 {
+    margin-right: 20px;
+}
+
+/*.choose_tab{
+    color: #1989fa!important;
+} */
+
 .choice {
     color: #1989fa!important;
+}
+
+.choice_blue1 {
+    color: #3190e8!important;
+}
+
+.bg_green {
+    background: #56d176;
 }
 
 .bg_blue {
     background: #3190e8;
 }
 
+.bg_yellow {
+    background: #FFC300;
+}
+
+.bg_gray {
+    background: #f6f6f6;
+}
+
+.bg_white {
+    background: #fff;
+}
+
 .span_white {
     color: #fff;
+}
+
+.span_black {
+    color: #222;
 }
 
 .bg_fff {
     background: #fff;
 }
 
+.bg_red {
+    background: #ff461d;
+}
+
+.bg_green {
+    background: #4cd964;
+}
+
+/*线条颜色  */
+
+.line_bg_gray {
+    background: #e4e4e4;
+}
+
+/* 边界 */
+
+.border_all {
+    border: 1px solid #e4e4e4;
+}
+
+.border_top {
+    border-top: 1px solid #e4e4e4;
+}
+
+.border_left {
+    border-left: 1px solid #e4e4e4;
+}
+
+.border_right {
+    border-right: 1px solid #e4e4e4;
+}
+
+.border_bottom {
+    border-bottom: 1px solid #e4e4e4;
+}
 
 /* 公共样式 */
+
 /* 字体大小 */
-.font18{
+
+/* 小于12px */
+
+.font10_left {
+    font-size: 12px;
+    -webkit-transform: scale(0.8);
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: left;
+}
+
+.font10_center {
+    font-size: 12px;
+    -webkit-transform: scale(0.8);
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: center;
+}
+.font12{
+    font-size: 12px;
+}
+.font14 {
+    font-size: 14px;
+}
+
+.font16 {
+    font-size: 16px;
+}
+
+.font18 {
     font-size: 18px;
 }
+
+.font20 {
+    font-size: 20px;
+}
+
+/* 加粗 */
+
+.weight_600 {
+    font-weight: 600;
+}
+
 /* 颜色 */
-.color_org{
+
+.color_gray {
+    color: #999;
+}
+
+.color_org {
     color: #f60;
 }
-.color_black3{
+
+.color_black3 {
     color: #333;
 }
-.color_blue{
-    color:#3190e8;
+
+.color_blue {
+    color: #3190e8;
 }
+
 /* 分割条 */
 
 .split {
     width: 100%;
-    background: #e4e4e4;
+    background: #f6f6f6;
     height: 10px;
 }
 
@@ -97,12 +324,14 @@
     right: 0;
     bottom: 0;
 }
-.fixed_top{
+
+.fixed_top {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
 }
+
 /* 弹性布局 */
 
 /* 水平排列 */
@@ -122,11 +351,23 @@
     flex-direction: row;
 }
 
+.flex_row_center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 /* 竖直排列 */
 
 .flex_column {
     display: flex;
     flex-direction: column;
+}
+
+.flex_column_center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* 竖直水平居中 */
@@ -136,18 +377,72 @@
     align-items: center;
     justify-content: center;
 }
+
 /* 竖直居中 */
+
 .flex_center_col {
     display: flex;
     align-items: center;
 }
+
 .flex_wrap {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-.flex_between{
+
+/* 两端对齐，元素之间的间隔都相等。 */
+
+.flex_between {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+/* 组件公共样式 */
+
+.search_content {
+    flex-grow: 1;
+}
+
+/* 箭头 */
+
+.arrow_left {
+    color: #333;
+    font-size: 21px;
+    position: absolute;
+}
+
+.arrow_right {
+    width: 5px;
+    height: 5px;
+    border: 2px solid gray;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(45deg);
+}
+
+/* 实心 向下 */
+
+.arrow_down_full {
+    border: 5px solid;
+    border-bottom: none;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    margin-left: 5px;
+}
+
+.food_top {
+    height: 25px;
+}
+
+.food_arrow_left {
+    position: absolute;
+    left: 15px;
+}
+
+.img-inner-box {
+    height: auto !important;
+    overflow: hidden;
 }

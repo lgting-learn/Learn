@@ -2,13 +2,8 @@
   <div
     class='order flex_column fixed_full'
   >
-    <van-nav-bar
-      :title="nav_title"
-      right-text="按钮"
-      left-arrow
-     @click="$router.go(-1);"
-      class="bg_blue span_white nav_index fixed_top"
-    />
+           <Top :nav_title='nav_title' :top_show="0"></Top>
+
     <div class="order_content">订单</div>
 
     <TabBottom
@@ -20,6 +15,7 @@
 
 <script>
 import TabBottom from "@/components/TabBottom.vue";
+import Top from "@/components/Top.vue";
 
 export default {
   data() {
@@ -28,7 +24,7 @@ export default {
       active: 2
     };
   },
-  components: { TabBottom },
+  components: { TabBottom,Top },
   computed: {},
   watch: {},
   methods: {},

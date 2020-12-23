@@ -24,7 +24,7 @@ exports.cssLoaders = function (options) {
   const px2remLoader = {
     loader: 'px2rem-loader',
     options: {
-      remUnit: 37.5//以750设计稿为准
+      remUnit: 32//以750设计稿为准
     }
   }
   const postcssLoader = {

@@ -1,21 +1,38 @@
 <template>
   <div class="TabBottom flex_row">
+<!-- 点击动画效果 -->
     <router-link
       tag="div"
       class="tab_item flex_column flex_center"
       v-for="(item,index) in tabBarImg"
       :key="index"
       :to="{name:item.name}"
+      @click.native="removeRegister"
+      :class="(index!=0&&active==index&&clickFlag)?'ballon':''"
+
     >
-      <van-icon
-        :name="item.icon"
-        :color="active==index?'#1989fa':''"
-        size="22"
-      />
-      <span :class="active==index?'choice':''">
-        {{item.title}}
-      </span>
-      </router-link>
+
+      <img
+        v-show="active!=index"
+        :src="item.src_0"
+        alt=""
+        class="1"
+        :class="(index==0&&active==0)?'img_big':''"
+      >
+        <img
+          v-show="active==index"
+          :src="item.src_1"
+          alt=""
+          class="2"
+          :class="[(index==0&&active==0)?'img_big':'']"
+        >
+          <span
+            class="font10_center"
+            v-show="index!=0||active!=0"
+          >
+            {{item.title}}
+            </span>
+            </router-link>
 
   </div>
 </template>
@@ -26,42 +43,73 @@ export default {
   props: ["nav_title", "active"],
   data() {
     return {
-     
+      clickFlag: true,
       icon: "home-o",
       color: "",
       span_color: "",
       tabBarImg: [
         {
           name: "taskaway",
-          icon: "home-o",
+          src_0: "../../static/images/tab1_1.svg",
+          src_1: "../../static/images/tab1_1.svg",
           title: "外卖"
         },
         {
           name: "search",
-          icon: "search",
+          src_0: "../../static/images/tab2_0.svg",
+          src_1: "../../static/images/tab2_1.svg",
           title: "搜索"
         },
         {
           name: "order",
-          icon: "notes-o",
+          src_0: "../../static/images/tab3_0.svg",
+          src_1: "../../static/images/tab3_1.svg",
           title: "订单"
         },
         {
           name: "mine",
-          icon: "friends-o",
+          src_0: "../../static/images/tab4_0.svg",
+          src_1: "../../static/images/tab4_1.svg",
           title: "我的"
         }
       ]
     };
   },
-  methods: {}
+  methods: {
+    removeRegister() {
+      this.clickFlag = true;
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+@keyframes scaleDraw {
+  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+  0% {
+    transform: scale(0.7); /*开始为原始大小*/
+  }
+  75% {
+    transform: scale(1);
+  }
+}
+.ballon {
+  -webkit-animation-name: scaleDraw; /*关键帧名称*/
+  -webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+  -webkit-animation-duration: 0.2s; /*动画所花费的时间*/
+  animation-fill-mode: forward; /*动画完成之后定格*/
+}
+
+.img_big {
+  width: 35px !important;
+  height: 35px !important;
+}
+.img_big {
+  width: 35px;
+  height: 35px;
+}
 .TabBottom {
-  /* height: 48px; */
   padding: 2px 0;
   flex-grow: 0;
   position: relative;
@@ -73,8 +121,8 @@ export default {
   position: fixed;
 }
 .TabBottom .tab_item img {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 }
 
 .tab_item {

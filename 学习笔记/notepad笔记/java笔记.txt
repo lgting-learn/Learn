@@ -1,0 +1,28 @@
+1、//将另一个数据库结果集赋值给另一个结果集的某一属性
+List<Map<String, Object>> results = jdbcTemplate.queryForList(sql);
+        Object idFir = results.get(0).get("id");//shop_food_classify表的id是food表的外键
+        sql = "select * from elemensys.food where category_id=" + idFir;
+//将另一个数据库结果集赋值给另一个结果集的某一属性
+        List<Map<String, Object>> resultsFood = jdbcTemplate.queryForList(sql);
+        Map<String, Object> mapFood = new HashMap<String, Object>();
+        mapFood.put("foods", resultsFood);
+        results.add(mapFood);
+
+2、迭代器方式遍历List集合
+Iterator<String> iter = list.iterator();
+while(iter.hasNext()){  
+//执行过程中会执行数据锁定，性能稍差，若在循环过程中要去掉某个元素只能调用iter.remove()方法。
+    System.out.println(iter.next());
+}
+注：Iterator遍历结果集报错，后采用for循环解决
+   for (int i = 0; i < results.size(); i++) {
+            id = results.get(i).get("id");
+            sql = "select * from elemensys.food where category_id=" + id;
+//将另一个数据库结果集赋值给另一个结果集的某一属性
+            resultsFood = jdbcTemplate.queryForList(sql);
+            if (resultsFood.size() != 0) {
+                mapFood = new HashMap<String, Object>();
+                mapFood.put("foods", resultsFood);
+                results.get(i).put("foods",mapFood);
+            }
+        }

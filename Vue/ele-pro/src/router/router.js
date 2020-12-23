@@ -8,6 +8,7 @@ import Search from '../page/search.vue'
 import Order from '../page/order.vue'
 import Mine from '../page/mine.vue'
 import Shop from '../page/shop.vue'
+import Food from '../page/food.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,7 +21,8 @@ const routes = [
   { path: "/search", component: Search, name: 'search' },
   { path: "/order", component: Order, name: 'order' },
   { path: "/mine", component: Mine, name: 'mine' },
-  { path: "/shop", component: Shop, name: 'shop' }
+  { path: "/shop", component: Shop, name: 'shop' },
+  { path: "/food", component: Food, name: 'food' }
 ]
 
 const router = new VueRouter({ routes })

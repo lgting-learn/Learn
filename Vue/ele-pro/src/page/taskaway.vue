@@ -2,13 +2,7 @@
   <div
     class='taskaway flex_column'
   >
-    <van-nav-bar
-      :title="nav_title"
-      right-text="按钮"
-      left-arrow
-      @click="$router.go(-1);"
-      class="bg_blue span_white nav_index fixed_top"
-    />
+    <Top :nav_title='nav_title' :top_show="0"></Top>
     <SwiperTA>
     </SwiperTA>
     <div class="split taskaway_split"></div>
@@ -27,11 +21,18 @@
         @click="clickFn"
       >
         <div
-          class="img-info"
+          class="img-info padding_10"
           slot-scope="props"
         >
           <!-- <p class="some-info">第{{props.index+1}}张图片</p> -->
-          <p class="some-info">{{props.value.info}}</p>
+          <p class="some-info weight_600 color_black3">{{props.value.info}}</p>
+          <div class="flex_row_center ">
+            <p class="some-info font12 color_org task_score margin_right_5 flex_center">{{props.value.score}}分</p>
+            <p class="some-info font12 color_gray ellipsis task_introduce flex_center">{{props.value.introduce}}</p>
+          </div>
+          <div class="flex_row_center ">
+            <div class="some-info font12 color_gray ellipsis task_item_btm">人均￥{{props.value.per_capita}}|月售{{props.value.month_sales}}</div>
+          </div>
     </div>
     </vue-waterfall-easy>
     </div>
@@ -48,9 +49,10 @@
 import SwiperTA from "@/components/SwiperTA.vue";
 import vueWaterfallEasy from "vue-waterfall-easy";
 import TabBottom from "@/components/TabBottom.vue";
+import Top from "@/components/Top.vue";
 
 export default {
-  components: { SwiperTA, vueWaterfallEasy, TabBottom },
+  components: { SwiperTA, vueWaterfallEasy, TabBottom,Top },
   data() {
     return {
       nav_title: "外卖",
@@ -69,9 +71,6 @@ export default {
     clickFn(event, { index, value }) {
       // 阻止a标签跳转
       // event.preventDefault();
-      console.log("img clicked1111");
-
-      debugger;
       // 只有当点击到图片时才进行操作
       if (event.target.tagName.toLowerCase() == "img") {
         console.log("img clicked", index, value);
@@ -90,8 +89,12 @@ export default {
         that.responseData.forEach(res => {
           that.imgsArr = that.imgsArr.concat({
             src: res.image_path,
-            href: {path: '/shop', query: {restaurant_id:res.id}},//!!!vueWaterfallEasy瀑布流组件 跳转传参
-            info: res.name
+            href: { path: "/shop", query: { restaurant_id: res.id } }, //!!!vueWaterfallEasy瀑布流组件 跳转传参
+            info: res.name,
+            score: res.score,
+            introduce: res.introduce,
+            per_capita: res.per_capita,
+            month_sales: res.month_sales
           });
         });
       });
@@ -128,6 +131,15 @@ export default {
 </script>
 
 <style >
+.task_item_btm {
+}
+.task_introduce {
+  max-width: 90px;
+}
+.task_score {
+  /* margin-right: 5px; */
+}
+
 .vue-waterfall-easy-container .vue-waterfall-easy-scroll {
   height: 900px !important;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div 
     class='swiper_taskaweay'
     id="swiper_taskaweay"
   >
@@ -18,7 +18,7 @@
             :key="index"
           > -->
           <router-link
-            :to="{path: '/shop', query: {}}"
+            :to="{path: '/food', query: {title:item.title}}"
             v-for="(item,index) in swipeTotal.slice((index_out-1)*item_num,(index_out-1)*item_num+item_num)"
             :key="index"
             class="swipe_item_ta_small flex_center flex_column"
@@ -39,7 +39,7 @@
 <script>
 // import {swiperFood} from "../service/getData.js"
 export default {
-  name: "SwiperTA",
+  name: "AddAndReduce",
   data() {
     return {
       //每张轮播图展示的图片数量
@@ -82,7 +82,7 @@ export default {
 .swiper_taskaweay {
   position: relative;
   flex-grow: 0;
-  margin-top: 43px;
+  /* margin-top: 43px; */
 }
 .swiper_taskaweay .swipe_item_ta_small img {
   width: 36px;
@@ -108,7 +108,7 @@ export default {
   height: 8px !important;
 }
 #swiper_taskaweay .van-swipe__indicators .van-swipe__indicator--active {
-  background-color: #1989fa !important;
+  background-color: #FFC300 !important;
   opacity: 1 !important;
 }
 #swiper_taskaweay .swipe_item_ta {
