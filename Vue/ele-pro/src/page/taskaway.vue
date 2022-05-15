@@ -102,7 +102,7 @@ export default {
     };
   },
   computed: {
-    isShow() {
+    isShow() { 
       return this.items && this.items.length > 0;
     },
   },
