@@ -119,7 +119,7 @@ export default {
   // 详情页面进入列表页前 
   beforeRouteEnter(to, from, next) {
     if (from.name == "shop") {
-      next((vm) => { 
+      next((vm) => {  
         // vm.$refs.common_container_task.scrollTop = getStore("container_scroll");
         // vm.$refs.waterfall.$refs.scrollEl.scrollTop = getStore("waterfall_scroll");
       });
