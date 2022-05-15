@@ -1,179 +1,191 @@
 <template>
+  <div class="food flex_column fixed_full">
+    <Top :nav_title="nav_title" :backPageName="backPageName"></Top>
+
     <div
-        class='food flex_column fixed_full'
+      class="food_container flex_column common_container"
+      :class="show ? '' : 'food_container_show'"
     >
-        <Top :nav_title='nav_title'></Top>
-
+      <div class="food_container_top flex_row border_bottom bg_fff grow_0">
         <div
-            class="food_container flex_column "
-            :class="show?'':'food_container_show'"
+          v-for="(item, index) in titleArr"
+          :key="index"
+          class="top_item grow_1 padding_10 flex_center font14"
+          :class="[
+            index != titleArr.length - 1 ? 'top_item_line' : '',
+            item.heightLightFlag ? 'choice_blue' : '',
+          ]"
+          @click="showPopup(index)"
         >
-            <div class="food_container_top flex_row border_bottom bg_fff grow_0">
-                <div
-                    v-for="(item,index) in titleArr"
-                    :key="index"
-                    class="top_item grow_1 padding_10 flex_center font14"
-                    :class="[index!=titleArr.length-1?'top_item_line':'',choose_tab==index?'choice_blue1':'']"
-                    @click="showPopup(index)"
-                >{{item.title}}
-                    <span
-                        class="arrow_down_full"
-                        :class="choose_tab==index?'choice_blue1':''"
-                    ></span>
+          {{ item.title }}
+          <span
+            class="arrow_down_full"
+            :class="item.heightLightFlag ? 'choice_blue_arrow' : ''"
+          ></span>
+        </div>
+      </div>
+      <div class="food_show near_shop_show grow_1 rel">
+        <vue-waterfall-easy
+          :imgsArr="imgsArr"
+          @scrollReachBottom="getData"
+          isRouterLink="true"
+          @click="clickFn"
+          ref="waterfall"
+        >
+          <div class="img-info padding_10" slot-scope="props">
+            <!-- <p class="some-info">第{{props.index+1}}张图片</p> -->
+            <p class="some-info weight_600 color_black3">{{ props.value.info }}</p>
+            <div class="flex_row_center">
+              <p class="some-info font12 color_org task_score margin_right_5">
+                {{ props.value.score }}分
+              </p>
+              <p class="some-info font12 color_gray ellipsis task_introduce">
+                {{ props.value.introduce }}
+              </p>
             </div>
+            <div class="flex_row_center">
+              <div class="some-info font10_left color_gray ellipsis task_item_btm">
+                人均￥{{ props.value.per_capita }}|月售{{ props.value.month_sales }}
+              </div>
+            </div>
+          </div>
+          <!-- 数据加载完 默认提示语：被你看完了 -->
+          <div slot="waterfall-over">被你看完啦</div>
+        </vue-waterfall-easy>
+        <van-popup v-model="show" position="top" :style="{ height: popup_height }">
+          <!-- 第一个tab 分类-->
+          <div class="condition flex_row" v-show="choose_tab == 0">
+            <div class="grow_1 condition_left">
+              <div
+                class="condition_left_item flex_row rel flex_center_col"
+                v-for="(item, index) in categoryLeft"
+                :key="index"
+                @click="chooseMenuLeft(item.id)"
+                :class="chooseMenuId == item.id ? 'bg_white' : ''"
+              >
+                <img
+                  :src="
+                    item.image_url
+                      ? item.image_url
+                      : 'https://fuss10.elemecdn.com/6/23/5a6fce94bed63a21508f68a72c158png.png'
+                  "
+                  alt=""
+                  class="icon_category"
+                />
+                <span>{{ item.name }}</span>
+                <span class="category_count">{{ item.count }}</span>
+                <van-icon
+                  name="arrow"
+                  color="gray"
+                  class="arrow_right_vant arrow_right_vant_food"
+                  size="14"
+                />
+              </div>
+            </div>
+            <div class="grow_1 condition_right">
+              <div
+                class="condition_right_item flex_row condition_left_item rel flex_center_col"
+                v-for="(item, index) in categoryLeft[chooseMenuId - 1].sub_categories"
+                :key="index"
+                :class="index != 19 ? 'border_bottom' : ''"
+              >
+                <span>{{ item.name }}</span>
+                <span class="category_count">{{ item.count }}</span>
+                <van-icon
+                  name="arrow"
+                  color="gray"
+                  class="arrow_right_vant arrow_right_vant_food"
+                  size="14"
+                />
+              </div>
+            </div>
+          </div>
 
-            </div>
-            <div class="food_show near_shop_show grow_1">
-
-                <vue-waterfall-easy
-                    :imgsArr="imgsArr"
-                    @scrollReachBottom="getData"
-                    isRouterLink="true"
-                    @click="clickFn"
-                >
-                    <div
-                        class="img-info padding_10"
-                        slot-scope="props"
-                    >
-                        <!-- <p class="some-info">第{{props.index+1}}张图片</p> -->
-                        <p class="some-info weight_600 color_black3">{{props.value.info}}</p>
-                        <div class="flex_row_center ">
-                            <p class="some-info font12 color_org task_score margin_right_5 ">{{props.value.score}}分</p>
-                            <p class="some-info font12 color_gray ellipsis task_introduce">{{props.value.introduce}}</p>
-                        </div>
-                        <div class="flex_row_center ">
-                            <div class="some-info font12 color_gray ellipsis task_item_btm">人均￥{{props.value.per_capita}}|月售{{props.value.month_sales}}</div>
-                        </div>
-            </div>
-            </vue-waterfall-easy>
-            <van-popup
-                v-model="show"
-                position="top"
-                :style="{ height: popup_height}"
+          <!-- 第二个标签 -->
+          <div class="condition flex_col" v-show="choose_tab == 1">
+            <div
+              v-for="(item, index) in sortArr"
+              :key="index"
+              class="flex_row padding_15 border_bottom sort_item"
             >
-                <!-- 第一个tab -->
-                <div
-                    class="condition flex_row"
-                    v-show="choose_tab==0"
+              <img src="" alt="" />
+              <span class="font14">{{ item.title }}</span>
+            </div>
+          </div>
+          <!-- 第三个标签 -->
+          <div class="condition flex_col" v-show="choose_tab == 2">
+            <div class="food_select flex_col padding_10 food_select_method">
+              <span class="select_title">配送方式</span>
+              <div class="send_method">
+                <span
+                  v-for="(item, index) in selectSendArr"
+                  :key="index"
+                  @click="chooseSelectTab('send', index)"
+                  :class="item.choose_index ? 'choice' : ''"
+                  class="border_all border_radius_3 padding_5_top_bottom flex_center"
+                  >{{ item.title }}</span
                 >
-                    <div class="grow_1 condition_left">
-                        <div
-                            class="condition_left_item flex_row rel flex_center_col "
-                            v-for="(item,index) in categoryLeft"
-                            :key="index"
-                            @click="chooseMenuLeft(item.id)"
-                            :class="chooseMenuId==item.id?'bg_white':''"
-                        >
-                            <img
-                                :src="item.image_url?item.image_url:'https://fuss10.elemecdn.com/6/23/5a6fce94bed63a21508f68a72c158png.png'"
-                                alt=""
-                                class="icon_category"
-                            >
-                                <span>{{item.name}}</span>
-                                <span class="category_count">{{item.count}}</span>
-                                <span class="arrow_right arrow_right_food abs"></span>
-                    </div>
-                    </div>
-                    <div class="grow_1 condition_right">
-                        <div
-                            class="condition_right_item flex_row condition_left_item rel flex_center_col"
-                            v-for="(item,index) in categoryLeft[chooseMenuId-1].sub_categories"
-                            :key="index"
-                            :class="index!=19?'border_bottom':''"
-                        >
-                            <span>{{item.name}}</span>
-                            <span class="category_count">{{item.count}}</span>
-                            <span class="arrow_right arrow_right_food abs"></span>
-                    </div>
-
-                    </div>
-                    </div>
-
-                    <!-- 第二个标签 -->
-                    <div
-                        class="condition  flex_col"
-                        v-show="choose_tab==1"
-                    >
-                        <div
-                            v-for="(item,index) in sortArr"
-                            :key="index"
-                            class="flex_row padding_20 border_bottom sort_item"
-                        >
-                            <img
-                                src=""
-                                alt=""
-                            >
-                                <span class="font14">{{item.title}}</span>
-                                </div>
-                                </div>
-                                <!-- 第三个标签 -->
-                                <div
-                                    class="condition flex_col"
-                                    v-show="choose_tab==2"
-                                >
-                                    <div class="food_select flex_col padding_10 food_select_method">
-                                        <span class="select_title">配送方式</span>
-                                        <div class="send_method">
-                                            <span
-                                                v-for="(item,index) in selectSendArr"
-                                                :key="index"
-                                                @click="chooseSelectTab('send',index)"
-                                                :class="item.choose_index?'choice':''"
-                                                class="border_all border_radius_3 padding_5_top_bottom flex_center"
-                                            >{{item.title}}</span>
-                                        </div>
-
-                                    </div>
-                                    <div class="food_select flex_col padding_10">
-                                        <span class="select_title">商家属性</span>
-                                        <div class="send_method send_method_attr flex_between">
-                                            <span
-                                                v-for="(item,index) in selectAttrArr"
-                                                :key="index"
-                                                class="border_all border_all_attr border_radius_3 padding_5_top_bottom flex_center"
-                                                @click="chooseSelectTab('attr',index)"
-                                                :class="item.choose_index?'choice':''"
-                                            >{{item.title}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="select_bot flex_row padding_10 bg_gray">
-                                        <div
-                                            class="select_bot_item clear bg_white grow_1 flex_center border_radius_5 span_black"
-                                            @click="clear"
-                                        >清空</div>
-                                    <div class="select_bot_item confirm grow_1 flex_center bg_green border_radius_5 span_white">确定</div>
-                                    </div>
-                                    </div>
-                                    </van-popup>
-                                    </div>
-                                    </div>
-
-                                    </div>
+              </div>
+            </div>
+            <div class="food_select flex_col padding_10">
+              <span class="select_title">商家属性</span>
+              <div class="send_method send_method_attr flex_between">
+                <span
+                  v-for="(item, index) in selectAttrArr"
+                  :key="index"
+                  class="border_all border_all_attr border_radius_3 padding_5_top_bottom flex_center"
+                  @click="chooseSelectTab('attr', index)"
+                  :class="item.choose_index ? 'choice' : ''"
+                  >{{ item.title }}</span
+                >
+              </div>
+            </div>
+            <div class="select_bot flex_row padding_10 bg_gray">
+              <div
+                class="select_bot_item clear bg_white grow_1 flex_center border_radius_5 span_black"
+                @click="clear"
+              >
+                清空
+              </div>
+              <div
+                class="select_bot_item confirm grow_1 flex_center bg_green border_radius_5 span_white"
+                @click="confirmFood"
+              >
+                确定
+              </div>
+            </div>
+          </div>
+        </van-popup>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import vueWaterfallEasy from "vue-waterfall-easy";
 import Top from "@/components/Top.vue";
+let qs = require("qs");
 
 export default {
   components: { vueWaterfallEasy, Top },
   data() {
     return {
+      heightLightTab: -1, //高亮tab
+      backPageName: "",
+      shop_start: 0,
+      shop_limit: 10,
+      shop_done: false, //true加载到最后一页
       imgsArr: [],
       responseData: [],
       popup_height: "auto", //下拉框高度
       nav_title: this.$route.query.title,
       show: false,
       chooseMenuId: 1, //左侧菜单选中索引
-      show_classify: false,
-      show_sort: false,
-      show_select: false,
+
       choose_tab: -1, //当前选中tab
       select_attr_index: -1, //当前选中tab
       categoryLeft: [],
-      selectSendArr: [
-        { title: "蜂鸟专送", index: 0, img_url: "", choose_index: false }
-      ], //配送方式
+      selectSendArr: [{ title: "蜂鸟专送", index: 0, img_url: "", choose_index: false }], //配送方式
       selectAttrArr: [
         //商家属性
         { title: "品牌商家", index: 0, img_url: "", choose_index: false },
@@ -181,64 +193,78 @@ export default {
         { title: "准时达", index: 2, img_url: "", choose_index: false },
         { title: "新店", index: 3, img_url: "", choose_index: false },
         { title: "在线支付", index: 4, img_url: "", choose_index: false },
-        { title: "开发票", index: 5, img_url: "", choose_index: false }
+        { title: "开发票", index: 5, img_url: "", choose_index: false },
       ],
       titleArr: [
         //tab
         {
           title: this.$route.query.title, //获取路由的传值
-          index: 0
+          index: 0,
+          heightLightFlag: false,
         },
-        { title: "排序", index: 1 },
-        { title: "筛选", index: 2 }
+        {
+          title: "排序",
+          index: 1,
+          heightLightFlag: false,
+        },
+        {
+          title: "筛选",
+          index: 2,
+          heightLightFlag: false,
+        },
       ],
       sortArr: [
         {
           img_path: "",
           title: "智能排序",
-          index: 0
+          index: 0,
         },
         {
           img_path: "",
           title: "距离最近",
-          index: 1
+          index: 1,
         },
         {
           img_path: "",
           title: "销量最高",
-          index: 2
+          index: 2,
         },
         {
           img_path: "",
           title: "起送价最低",
-          index: 3
+          index: 3,
         },
         {
           img_path: "",
           title: "配送速度最快",
-          index: 4
+          index: 4,
         },
         {
           img_path: "",
           title: "评分最高",
-          index: 5
-        }
-      ]
+          index: 5,
+        },
+      ],
     };
   },
   computed: {},
-  watch: {},
+  watch: {
+    show: function () {
+      if (!this.show) {
+        for (let i = 0; i < this.titleArr.length; i++) {
+          this.titleArr[i].heightLightFlag = false;
+        }
+      }
+    },
+  },
   created() {
     //初始化瀑布流
     this.getData();
     this.getCategory();
+    this.getBackPageName();
   },
   mounted() {},
   methods: {
-    //
-    // matchLeft(){
-
-    // },
     //   清空
     clear() {
       for (let i = 0; i < this.selectSendArr.length; i++) {
@@ -248,26 +274,34 @@ export default {
         this.selectAttrArr[i].choose_index = false;
       }
     },
+    //点击确定
+    confirmFood() {
+      this.show = false;
+      for (let i = 0; i < this.titleArr.length; i++) {
+        this.titleArr[i].heightLightFlag = false;
+      }
+    },
     //点击筛选tab
     chooseSelectTab(type, index) {
       if (type == "send") {
-        this.selectSendArr[index].choose_index = !this.selectSendArr[index]
-          .choose_index;
+        this.selectSendArr[index].choose_index = !this.selectSendArr[index].choose_index;
       } else if (type == "attr") {
-        this.selectAttrArr[index].choose_index = !this.selectAttrArr[index]
-          .choose_index;
+        this.selectAttrArr[index].choose_index = !this.selectAttrArr[index].choose_index;
       }
     },
     chooseMenuLeft(id) {
       this.chooseMenuId = id;
     },
+    getBackPageName() {
+      this.backPageName = this.$route.query.backPageName || "";
+    },
     //获取分类
     getCategory() {
       var that = this;
-      this.$axios.get("/api/category").then(res => {
+      this.$axios.get("/api/category").then((res) => {
         that.categoryLeft = res.data;
         if (that.categoryLeft.length > 0) {
-          that.categoryLeft.forEach(item => {
+          that.categoryLeft.forEach((item) => {
             if (item.name == that.nav_title) {
               that.chooseMenuId = item.id;
             }
@@ -278,9 +312,26 @@ export default {
     //瀑布流 触底加载
     getData() {
       var that = this;
-      this.$axios.get("/api/shop").then(function(res) {
+      let data = qs.stringify({
+        start: this.shop_start,
+        limit: this.shop_limit,
+        category: this.$route.query.category,
+      });
+      this.$axios.post("/api/shop", data).then(function (res) {
+        if (res && res.data) {
+          if (res.data.length == 10) {
+            that.shop_start += 10;
+          } else {
+            that.shop_done = true; //最后一页
+            //恰好上次请求十条数据之后 本次0条
+            //!!!数据加载完成 取消瀑布流加载动画，要给瀑布流组件添加 ref="waterfall"
+
+            that.$refs.waterfall.waterfallOver();
+            return;
+          }
+        }
         that.responseData = res.data;
-        that.responseData.forEach(res => {
+        that.responseData.forEach((res) => {
           that.imgsArr = that.imgsArr.concat({
             src: res.image_path,
             href: { path: "/shop", query: { restaurant_id: res.id } }, //!!!vueWaterfallEasy瀑布流组件 跳转传参
@@ -288,7 +339,7 @@ export default {
             score: res.score,
             introduce: res.introduce,
             per_capita: res.per_capita,
-            month_sales: res.month_sales
+            month_sales: res.month_sales,
           });
         });
       });
@@ -301,36 +352,50 @@ export default {
         console.log("img clicked", index, value);
       }
     },
+    //index 当前选择tab
     showPopup(index) {
-      if (index == 0) {
-        this.show_classify = true;
-        this.show_sort = false;
-        this.show_select = false;
-        this.show = false;
-      } else if (index == 1) {
-        this.show_classify = false;
-        this.show_sort = true;
-        this.show_select = false;
-        this.show = false;
-      } else if (index == 2) {
-        this.show_classify = false;
-        this.show_sort = false;
-        this.show_select = true;
-        this.show = false;
-      }
-      //   if()
-      var that = this;
-      setTimeout(function() {
-        that.show = !that.show;
-      }, 300);
-      // this.show = !this.show;
       this.choose_tab = index;
-    }
-  }
+      let flagInit = false; //第一次点击tab
+      let flagItem = false; //
+      for (let i = 0; i < this.titleArr.length; i++) {
+        //某tab被选中
+        if (this.titleArr[i].heightLightFlag) {
+          flagInit = true;
+
+          //展示/收起
+          if (this.choose_tab == this.titleArr[i].index) {
+            this.show = false; //收起
+            this.titleArr[i].heightLightFlag = this.show;
+          } else {
+            this.show = true; //展开
+            for (let j = 0; j < this.titleArr.length; j++) {
+              this.titleArr[j].heightLightFlag = false;
+            }
+            this.titleArr[index].heightLightFlag = this.show;
+            return;
+          }
+        }
+      }
+      //没有tab被选中，直接展开tab并设置各tab状态
+      if (!flagInit) {
+        this.show = !this.show;
+        for (let i = 0; i < this.titleArr.length; i++) {
+          this.titleArr[i].heightLightFlag = false;
+        }
+        this.titleArr[index].heightLightFlag = true;
+      }
+    },
+  },
 };
 </script>
 
 <style>
+.arrow_right_vant_food {
+  right: 5px;
+}
+.food .van-nav-bar__arrow {
+  position: absolute;
+}
 .food_select {
   padding-bottom: 0px !important;
 }
@@ -342,7 +407,7 @@ export default {
 .sort_item {
   padding-left: 0;
   padding-right: 0;
-  margin: 0 20px;
+  margin: 0 15px;
 }
 .condition_right {
   height: 340px;
@@ -363,9 +428,11 @@ export default {
 }
 .food_container {
   flex: 1;
+  bottom: 0 !important;
 }
-.near_shop_show {
-  overflow-y: auto;
+.food_container .near_shop_show {
+  /* overflow-y: auto; */
+  /* padding-top: 10px; */
 }
 .food_select_method {
   padding-bottom: 0;
@@ -410,13 +477,16 @@ export default {
 }
 .van-popup {
   position: absolute;
-  top: 75px;
+  /* top: 75px; */
   overflow: hidden !important;
 }
 .top_item_line {
   border-right: 1px solid #e4e4e4;
 }
-.van-overlay {
+.food_container .van-overlay {
   margin-top: 90px !important;
+}
+.vue-waterfall-easy-container .loading .dot {
+  background: #1989fa !important;
 }
 </style>

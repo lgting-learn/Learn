@@ -3,7 +3,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-
+const targetIP = 'http://192.168.0.102';
+// wifi ip不固定
+const viewIP = '192.168.0.102';
+// 手机热点
+// const viewIP ='172.20.10.3';
 module.exports = {
   dev: {
 
@@ -12,7 +16,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api/': {
-        target: 'http://localhost:8088/',
+        // target: 'http://localhost:8088/',
+        target: targetIP + ':8088/',
         changeOrigin: true,
         pathRewrire: {
           '^/api': ''
@@ -21,10 +26,9 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.0.101', // can be overwritten by process.env.HOST
-    // host: '127.0.0.1', // can be overwritten by process.env.HOST
+    host: viewIP,
     port: 8086, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
@@ -59,7 +63,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: 'http://192.168.0.102:8086/ELE-PEO/',
 
     /**
      * Source Maps

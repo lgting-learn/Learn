@@ -4,8 +4,9 @@
 <head>
   <meta name="theme-color" content="#FFC300">
   <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" name="viewport">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!--
       底部安全区适配
 iPhone X 等机型底部存在底部指示条，指示条的操作区域与页面底部存在重合，容易导致用户误操作，因此我们需要针对这些机型进行底部安全区适配。
@@ -15,13 +16,42 @@ Vant 中部分组件提供了safe-area-inset-bottom属性，设置该属性后�
       -->
   <!-- 开启 safe-area-inset-bottom 属性 -->
   <van-number-keyboard safe-area-inset-bottom />
-  <title>ele-pro</title>
+  <title>Time To Hungry</title>
 </head>
 
 <body>
-  <div id="app" v-cloak></div>
+  <!-- 启动页 -->
+  <div id="app" v-cloak class="app_index" style=" position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  ">
+
+    <div alt="" class="startupage" style="
+    background-image: url(./static/images/StartUpPage1.gif);
+    background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      width: 13%;
+      height: 13%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      "></div>
+
+    <div></div>
+  </div>
   <!-- built files will be auto injected -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/better-scroll"></script>
+<script>
+</script>
+
 
 </html>

@@ -3,6 +3,35 @@
     margin: 0;
     font-size: 13px;
     color: #666;
+    -webkit-text-size-adjust: none;
+}
+
+input {
+    /* border: 0;
+    padding: 0 10px;
+    font-size: 16px !important; */
+    /* font-size: 16px!important; */
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: textfield;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding-right: 10px;
+}
+
+input:focus {
+    /* font-size: 16px !important; */
 }
 
 [v-cloak] {
@@ -40,6 +69,14 @@
     border-radius: 5px;
 }
 
+.border_radius_10 {
+    border-radius: 10px;
+}
+
+.border_radius_20 {
+    border-radius: 20px;
+}
+
 .border_radius_50 {
     border-radius: 50px;
 }
@@ -50,8 +87,24 @@
 
 /* 选中 */
 
+.padding_btm_10 {
+    padding-bottom: 10px;
+}
+
+.padding_top_10 {
+    padding-top: 10px;
+}
+
+.padding_rgt_10 {
+    padding-right: 10px;
+}
+
 .padding_5_top_bottom {
     padding: 5px 0;
+}
+
+.padding_5_bottom {
+    padding-bottom: 5px;
 }
 
 .padding_5_left_right {
@@ -76,6 +129,18 @@
 
 .padding_10_left_right {
     padding: 0px 10px;
+}
+
+.padding_15 {
+    padding: 15px;
+}
+
+.padding_15_top_bottom {
+    padding: 15px 0;
+}
+
+.padding_15_left_right {
+    padding: 0px 15px;
 }
 
 .padding_20 {
@@ -150,6 +215,71 @@
     margin-right: 20px;
 }
 
+.margin_top_25 {
+    margin-top: 25px;
+}
+
+.margin_10_top_bottom {
+    margin: 10px 0;
+}
+
+.margin_10_left_right {
+    margin: 0 10px;
+}
+
+/* 宽高 */
+
+.width_height_10 {
+    width: 10px;
+    height: 10px;
+}
+
+.width_height_15 {
+    width: 15px;
+    height: 15px;
+}
+
+.width_height_20 {
+    width: 20px;
+    height: 20px;
+}
+
+.width_height_30 {
+    width: 30px;
+    height: 30px;
+}
+
+.width_height_50 {
+    width: 50px;
+    height: 50px;
+}
+
+.width_height_60 {
+    width: 60px;
+    height: 60px;
+}
+
+.width_height_120 {
+    width: 120px;
+    height: 120px;
+}
+
+.top_0 {
+    top: 0;
+}
+
+.right_0 {
+    right: 0px;
+}
+
+.right_5 {
+    right: 5px;
+}
+
+.right_10 {
+    right: 10px;
+}
+
 /*.choose_tab{
     color: #1989fa!important;
 } */
@@ -158,12 +288,26 @@
     color: #1989fa!important;
 }
 
-.choice_blue1 {
+.choice_blue {
     color: #3190e8!important;
+}
+
+.choice_blue_arrow {
+    color: #3190e8!important;
+    transform: rotate(-180deg)!important;
+    /* transition: transform 0.2s; */
 }
 
 .bg_green {
     background: #56d176;
+}
+
+.bg_black {
+    background: #333;
+}
+
+.bg_black_2E2F3B {
+    background: #2E2F3B;
 }
 
 .bg_blue {
@@ -172,6 +316,7 @@
 
 .bg_yellow {
     background: #FFC300;
+    /* background: #cf4a3b; */
 }
 
 .bg_gray {
@@ -182,12 +327,8 @@
     background: #fff;
 }
 
-.span_white {
-    color: #fff;
-}
-
-.span_black {
-    color: #222;
+.bg_red {
+    background: #cf4a3b;
 }
 
 .bg_fff {
@@ -200,6 +341,34 @@
 
 .bg_green {
     background: #4cd964;
+}
+
+.span_red {
+    color: #ff461d;
+}
+
+.span_white {
+    color: #fff;
+}
+
+.span_black {
+    color: #222;
+}
+
+.span_yellow {
+    color: #FFC300;
+}
+
+.span_gray {
+    color: #999;
+}
+
+.overflow_auto {
+    overflow: auto;
+}
+
+.overflow_hidden {
+    overflow: hidden;
 }
 
 /*线条颜色  */
@@ -230,6 +399,10 @@
     border-bottom: 1px solid #e4e4e4;
 }
 
+.border_none {
+    border: 0px solid!important;
+}
+
 /* 公共样式 */
 
 /* 字体大小 */
@@ -249,11 +422,49 @@
     /*解决缩小后字体不居中显示问题*/
     -webkit-transform-origin-X: center;
 }
-.font12{
+
+.font10_right {
+    font-size: 12px;
+    -webkit-transform: scale(0.8);
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: right;
+}
+
+.font11_left {
+    font-size: 14px;
+    -webkit-transform: scale(0.8);
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: left;
+}
+
+.font11_center {
+    font-size: 14px;
+    -webkit-transform: scale(0.8);
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: center;
+}
+
+.font11_right {
+    font-size: 14px;
+    -webkit-transform: scale(0.8)!important;
+    /*解决缩小后字体不居中显示问题*/
+    -webkit-transform-origin-X: right;
+}
+
+.font12 {
     font-size: 12px;
 }
+
+.font13 {
+    font-size: 13px;
+}
+
 .font14 {
     font-size: 14px;
+}
+
+.font15 {
+    font-size: 15px;
 }
 
 .font16 {
@@ -268,16 +479,20 @@
     font-size: 20px;
 }
 
+.font25 {
+    font-size: 25px;
+}
+
 /* 加粗 */
 
 .weight_600 {
-    font-weight: 600;
+    font-weight: bold;
 }
 
 /* 颜色 */
 
 .color_gray {
-    color: #999;
+    color: #gray;
 }
 
 .color_org {
@@ -341,7 +556,6 @@
 }
 
 /* 铺满剩余空间 */
-
 .grow_1 {
     flex-grow: 1;
 }
@@ -384,7 +598,15 @@
     display: flex;
     align-items: center;
 }
+/* 水平居中 */
 
+.flex_center_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
 .flex_wrap {
     display: flex;
     flex-direction: row;
@@ -397,6 +619,20 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+/* 左对齐 */
+
+.flex_start {
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* 右对齐 */
+
+.flex_end {
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* 组件公共样式 */
@@ -422,9 +658,25 @@
     transform: rotate(45deg);
 }
 
+.arrow_right_vant {
+    position: absolute!important;
+    right: 0;
+}
+
+.arrow_down {
+    width: 5px;
+    height: 5px;
+    border: 2px solid gray;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(135deg);
+}
+
 /* 实心 向下 */
 
 .arrow_down_full {
+    transform: rotate(0deg);
+    /* transition: transform 0.2s; */
     border: 5px solid;
     border-bottom: none;
     border-left-color: transparent;
@@ -445,4 +697,62 @@
 .img-inner-box {
     height: auto !important;
     overflow: hidden;
+}
+
+.van-toast .van-toast__text {
+    color: white;
+}
+
+.common_container {
+    position: absolute!important;
+    left: 0;
+    right: 0;
+    top: 42px;
+    bottom: 42px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.commit_order {
+    width: 92%;
+    left: 50% !important;
+    overflow: hidden;
+    margin-left: -46%;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+}
+
+.commit_order .bg_yellow {
+    background: -webkit-linear-gradient(left, #ffd01e, #FFC300 100%);
+}
+
+.commit_order_price span:nth-child(2) {
+    left: 16px;
+    /* bottom: 0; */
+}
+
+.commit_order_price span:nth-child(1) {
+    left: 3px;
+    /* bottom: 0; */
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.display_hidden {
+    display: none!important;
+}
+.display_show {
+    display: block!important;
+}
+
+.display_block {
+    display: flex!important;
 }

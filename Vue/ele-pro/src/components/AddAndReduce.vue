@@ -1,21 +1,21 @@
 <template>
-    <div class='addAndReduce'>
-        <div class="flex_row  food_num">
-            <div
-                class="bg_blue border_radius_50 span_white num_change num_reduce flex_center"
-                @click="numChange(0,itemss.id,itemss.restaurant_id)"
-                v-show="itemss.buy_number>0"
-            >-</div>
-        <div
-            class="num_show"
-            v-show="itemss.buy_number>0"
-        >{{itemss.buy_number}}</div>
+  <div class='addAndReduce'>
+    <div class="flex_row  food_num">
+      <div
+        class="bg_yellow border_radius_50 span_black num_change num_reduce flex_center"
+        @click="numChange(0,itemss.id,itemss.restaurant_id)"
+        v-show="itemss.buy_number>0"
+      >-</div>
     <div
-        class="bg_blue border_radius_50 span_white num_change num_add flex_center"
-        @click="numChange(1,itemss.id,itemss.restaurant_id)"
-    >+</div>
-        </div>
-        </div>
+      class="num_show"
+      v-show="itemss.buy_number>0"
+    >{{itemss.buy_number}}</div>
+  <div
+    class="bg_yellow border_radius_50 span_black num_change num_add flex_center"
+    @click="numChange(1,itemss.id,itemss.restaurant_id)"
+  >+</div>
+    </div>
+    </div>
 </template>
 
 <script>
@@ -87,6 +87,7 @@ export default {
           if (item.foods.length > 0) {
             item.foods.forEach(items => {
               num += items.buy_number;
+              //解决price出现多位小数
               price += items.buy_number * items.price;
               if (items.buy_number > 0) {
                 amountList.push(items); //购物车-食品详情
@@ -95,7 +96,7 @@ export default {
           }
         });
       }
-      that.$emit("getFoodsTotal", num, price);
+      that.$emit("getFoodsTotal", num, price.toFixed(2));
       that.$emit("getAmountList", amountList);
     }
   },
@@ -103,11 +104,11 @@ export default {
     let that = this;
     let data = qs.stringify({ restaurant_id: this.restaurant_id });
     //获取左侧菜单
-    this.$axios.post("/api/shopFoodClassify", data).then(function(res) {
-      that.goodList = res.data;
-      that.$emit("getFoodClassify", that.goodList);
-      that.getFoodsTotal(that.goodList, that);
-    });
+    // this.$axios.post("/api/shopFoodClassify", data).then(function(res) {
+    //   that.goodList = res.data;
+    //   that.$emit("getFoodClassify", that.goodList);
+    //   that.getFoodsTotal(that.goodList, that);
+    // });
   },
   mounted() {}
 };
