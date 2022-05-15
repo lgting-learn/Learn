@@ -116,7 +116,7 @@ export default {
     // setStore("waterfall_scroll", waterfall_scroll);
     next();
   },
-  // 详情页面进入列表页前
+  // 详情页面进入列表页前 
   beforeRouteEnter(to, from, next) {
     if (from.name == "shop") {
       next((vm) => {
