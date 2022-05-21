@@ -3,6 +3,7 @@
     <div
       id="waterFall"
       class="waterFall"
+      ref="waterFall"
       :style="{ margin: waterFulpadding + 'px' }"
     ></div>
   </keep-alive>
@@ -10,6 +11,8 @@
 
 <script>
 import { throttle, getStore, setStore, isNotBlank } from "../config/mUtils.js";
+import Component from 'vue-class-component'
+Component.registerHooks(["beforeRouteEnter", "beforeRouteLeave", "beforeRouteUpdate"]);
 export default {
   props: [
     "imgsArr",
@@ -43,9 +46,31 @@ export default {
   },
   created() {},
   mounted() {
+    // onclick 执行的是 window 环境中的方法，所以：将 this 中的方法或data中定义的字段关联到 window 上
+    window.turnShop = this.turnShop;
     this.$nextTick(() => {
       window.addEventListener("scroll", throttle(this.handleScrollTaskAway, 30), true);
     });
+  },
+  // router跳转离开列表页前，记录当前页面的位置
+  beforeRouteLeave(to, from, next) {
+    debugger;
+    // 要滚动到顶部吸附的元素的偏移量
+    let container_scroll = document.querySelector("#waterFall").scrollTop;
+    setStore("container_scroll", container_scroll);
+    next();
+  },
+  // 详情页面进入列表页前
+  beforeRouteEnter(to, from, next) {
+    if (from.name == "shop") {
+      next((vm) => {
+        vm.$refs.waterFall.scrollTop = getStore("container_scroll");
+      });
+    } else {
+      next((vm) => {
+        vm.$refs.waterFall.scrollTop = 0;
+      });
+    }
   },
   methods: {
     changeIsInProcessing: function (flagIn) {
@@ -95,9 +120,11 @@ export default {
         imgsArrIndex < this.imgsArr.length;
         itemIndex++, imgsArrIndex++
       ) {
-        console.log("itemIndex=" + itemIndex + " " + this.shop_start);
         let itemObj = this.imgsArr[imgsArrIndex];
-        let oItemHtml = `<div class="item" style="width:${itemWidth}px">
+        var aaa = itemObj.info;
+        let oItemHtml = `<div class="item" style="width:${itemWidth}px" onclick="javascript:turnShop('${
+          itemObj.href.query.restaurant_id
+        }')">
       <img src="${itemObj && itemObj.src}" alt="" />
 
       <div class="img-info padding_10">
@@ -189,11 +216,17 @@ export default {
         this.maxItemAllHei += 120 + this.waterFullBottom;
       }
       $("#waterFall").height(this.maxItemAllHei);
-      console.log("this.maxItemAllHei==" + this.maxItemAllHei);
       // 元素渲染完成解锁，可以继续请求data
       this.isImgLoading = false;
     },
 
+    turnShop(restaurant_id) {
+      // 防止ios触底出现工具栏
+      this.$router.replace({
+        name: "shop",
+        query: { restaurant_id: restaurant_id, backPageName: "taskaway" },
+      });
+    },
     // 预加载图片
     preLoadImages() {
       let that = this;

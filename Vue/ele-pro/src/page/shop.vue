@@ -505,7 +505,6 @@ export default {
           }
         }
         that.goodList = that.goodListReal;
-        console.log("that.goodList==", that.goodList);
 
         that.skeleton_loading = false; //取消骨架屏  TODO
         that.$emit("getFoodClassify", that.goodList);

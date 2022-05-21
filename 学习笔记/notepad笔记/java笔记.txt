@@ -1,3 +1,17 @@
+增删改查
+（1）删除
+ String sql = "delete from elemensys.food where id=" + id;
+        jdbcTemplate.update(sql);
+（2）创建
+  String sql = "insert into elemensys.shop(name,address,introduce,phone,category,start_time,end_time)" +
+                "values ('" + name + "','" + address + "','" + introduce + "','" + phone + "','" + category + "','" + start_time + "','" + end_time + "')";
+        jdbcTemplate.update(sql);
+（3）编辑
+String sql = "update elemensys.food set name='" + name + "',introduce='" + introduce + "',score='" + score + "' where id=" + id;
+        jdbcTemplate.update(sql);
+
+
+
 1、//将另一个数据库结果集赋值给另一个结果集的某一属性
 List<Map<String, Object>> results = jdbcTemplate.queryForList(sql);
         Object idFir = results.get(0).get("id");//shop_food_classify表的id是food表的外键

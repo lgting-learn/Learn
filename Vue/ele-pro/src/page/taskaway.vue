@@ -102,40 +102,34 @@ export default {
     };
   },
   computed: {
-    isShow() { 
+    isShow() {
       return this.items && this.items.length > 0;
     },
   },
   watch: {},
 
-  // router跳转离开列表页前，记录当前页面的位置
-  beforeRouteLeave(to, from, next) {
-    // let container_scroll = document.querySelector(".common_container_task").scrollTop; // 要滚动到顶部吸附的元素的偏移量
-    // let waterfall_scroll = document.querySelector(".vue-waterfall-easy-scroll").scrollTop;
-    // setStore("container_scroll", container_scroll);
-    // setStore("waterfall_scroll", waterfall_scroll);
-    next();
-  },
-  // 详情页面进入列表页前 
-  beforeRouteEnter(to, from, next) {
-    if (from.name == "shop") {
-      next((vm) => { 
-        // vm.$refs.common_container_task.scrollTop = getStore("container_scroll");
-        // vm.$refs.waterfall.$refs.scrollEl.scrollTop = getStore("waterfall_scroll");
-      });
-    } else {
-      next((vm) => {
-        // vm.$refs.common_container_task.scrollTop = 0;
-      });
-    }
-  },
+  // // router跳转离开列表页前，记录当前页面的位置
+  // beforeRouteLeave(to, from, next) {
+  //   let container_scroll = document.querySelector(".common_container_task").scrollTop; // 要滚动到顶部吸附的元素的偏移量
+  //   let waterfall_scroll = document.querySelector(".vue-waterfall-easy-scroll").scrollTop;
+  //   setStore("container_scroll", container_scroll);
+  //   setStore("waterfall_scroll", waterfall_scroll);
+  //   next();
+  // },
+  // // 详情页面进入列表页前
+  // beforeRouteEnter(to, from, next) {
+  //   if (from.name == "shop") {
+  //     next((vm) => {
+  //       // vm.$refs.common_container_task.scrollTop = getStore("container_scroll");
+  //       // vm.$refs.waterfall.$refs.scrollEl.scrollTop = getStore("waterfall_scroll");
+  //     });
+  //   } else {
+  //     next((vm) => {
+  //       // vm.$refs.common_container_task.scrollTop = 0;
+  //     });
+  //   }
+  // },
   methods: {
-    // 页面尺寸改变时实时触发
-    // window.onresize = function() {
-    //     //重新定义瀑布流
-    //     waterFall();
-    // };
-
     // 获取轮播图高度
     getSwiperHeight(height) {
       // this.swi_height = height;
