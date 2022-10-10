@@ -7,7 +7,7 @@
           class="self_center flex_row bg_yellow abs bg_white border_radius_5"
           @click="turnLoginOrCenter"
         >
-          <img :src="img_url" alt="" class="circle head_img margin_right_10 margin_20" />
+          <img :src="img_url" alt="" class="circle head_img margin_right_10 margin_20"/>
           <div class="flex_column_center bg_white">
             <span class="span_black margin_bottom_5 font16">{{ loginName }}</span>
             <span class="font12 color_gray ell">{{ sign }}</span>
@@ -15,59 +15,62 @@
         </div>
       </div>
       <div class="mine_container">
+        <!-- 循环动态绑定事件 -->
         <div
           class="mine_container_item rel flex_row_center padding_15_top_bottom border_bottom font15 span_black"
-          @click="aboutUs"
+          v-for="(item, index) in showDataList"
+          :key="index"
+          @click="Fn(item.itemMethod)"
         >
-          关于我们
-          <!-- 
-      class="arrow_left food_arrow_left van-icon van-icon-arrow-left van-nav-bar__arrow span_black"
-
-           -->
-          <!-- <span class="arrow"></span> -->
-          <van-icon name="arrow" color="gray" class="arrow_right_vant" size="16" />
-        </div>
-        <div
-          class="mine_container_item rel flex_row_center padding_15_top_bottom border_bottom font15 span_black"
-          @click="feedBack"
-        >
-          意见反馈
-          <van-icon name="arrow" color="gray" class="arrow_right_vant" size="16" />
-        </div>
-        <div
-          class="mine_container_item rel flex_row_center padding_15_top_bottom border_bottom font15 span_black"
-          @click="turnSettings"
-        >
-          设置
-          <van-icon name="arrow" color="gray" class="arrow_right_vant" size="16" />
+          {{ item.title }}
+          <van-icon name="arrow" color="gray" class="arrow_right_vant" size="16"/>
         </div>
       </div>
     </div>
-    <TabBottom :active="active"> </TabBottom>
+    <TabBottom :active="active"></TabBottom>
   </div>
 </template>
 
 <script>
 import TabBottom from "@/components/TabBottom.vue";
 import Top from "@/components/Top.vue";
-import { Toast } from "vant";
-import { getStore, setStore, isNotBlank } from "../config/mUtils.js";
+import {Toast} from "vant";
+import {
+  getStore,
+  setStore,
+  isNotBlank,
+  setHistory,
+} from "../../config/mUtils.js";
+import {
+  global,
+} from '../../../config/index'
+
+let pathFinally = (global.PRODUCTFLAG ? (global.PRODUCTIP + '/') : '') + 'static/images/';
 let qs = require("qs");
 export default {
   data() {
     return {
+      pathFinally:pathFinally,
+      showDataList: [
+        {title: "关于我们", itemMethod: "aboutUs"},
+        {title: "意见反馈", itemMethod: "feedBack"},
+        {title: "设置", itemMethod: "turnSettings"},
+      ],
       loginFlag: false,
       loginName: "登录/注册", //登陆状态
       nav_title: "我的",
       active: 3,
       sign: "欢迎回来", //个签
-      img_url: "../../static/images/default_headImg.svg", //用户头像
+      img_url: "../../"+pathFinally+"default_headImg.svg", //用户头像
     };
   },
-  components: { TabBottom, Top },
+  components: {TabBottom, Top},
   computed: {},
   watch: {},
   methods: {
+    Fn(method) {
+      this[method]();
+    },
     // 未登录=>登录页面
     // 登录=>个人中心
     turnLoginOrCenter() {
@@ -75,14 +78,12 @@ export default {
         this.$router.replace({
           path: "/personalCenter",
           query: {
-            backPageName: "mine",
           },
         });
       } else {
         this.$router.replace({
           path: "/login",
           query: {
-            backPageName: "mine",
           },
         });
       }
@@ -92,21 +93,22 @@ export default {
       this.$router.replace({
         path: "/settings",
         query: {
-          backPageName: "mine",
         },
       });
     },
     //关于我们
     aboutUs() {
-      Toast("没什么好了解的");
+      Toast("待完善");
     },
     //意见反馈
     feedBack() {
-      Toast("反馈了也不听");
+      Toast("待完善");
     },
-    onClickLeft () {},
+    onClickLeft() {
+    },
     //跳转个人中心
-    turnPersonCenetr() {},
+    turnPersonCenetr() {
+    },
     getLoginInfo() {
       this.loginUserInfo =
         getStore("loginUserInfo") && JSON.parse(getStore("loginUserInfo"));
@@ -125,7 +127,10 @@ export default {
   created() {
     this.getLoginInfo();
   },
-  mounted() {},
+  mounted() {
+    setHistory(this);
+
+  },
 };
 </script>
 
@@ -134,33 +139,41 @@ export default {
   position: relative !important;
   top: 0 !important;
 }
+
 .mine_content_top {
   /* padding-top: 6px; */
 }
+
 .arrow_right {
   right: 0;
 }
+
 .mine_container {
   margin-left: 3%;
   margin-right: 3%;
 }
+
 .mine_container_item:nth-child(1) {
   margin-top: 40px;
 }
+
 .head_img {
   height: 50px;
   width: 50px;
   margin-right: 10px !important;
 }
+
 .mine_content {
   flex-grow: 1;
   height: 100%;
 }
+
 .mine_content_top {
   position: relative;
   /* 失效原因 父元素mine_content也需要设置高度 */
   height: 10%;
 }
+
 .self_center {
   width: 94%;
   overflow: hidden;

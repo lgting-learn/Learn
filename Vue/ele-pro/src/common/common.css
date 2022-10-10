@@ -1,16 +1,12 @@
 * {
     padding: 0;
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     color: #666;
     -webkit-text-size-adjust: none;
 }
 
 input {
-    /* border: 0;
-    padding: 0 10px;
-    font-size: 16px !important; */
-    /* font-size: 16px!important; */
     -webkit-writing-mode: horizontal-tb !important;
     text-rendering: auto;
     color: -internal-light-dark(black, white);
@@ -106,6 +102,9 @@ input:focus {
 .padding_5_bottom {
     padding-bottom: 5px;
 }
+.padding_0_bottom {
+    padding-bottom: 0px;
+}
 
 .padding_5_left_right {
     padding: 0px 5px;
@@ -122,11 +121,16 @@ input:focus {
 .padding_10 {
     padding: 10px;
 }
+.padding_12 {
+    padding: 12px;
+}
 
 .padding_10_top_bottom {
     padding: 10px 0;
 }
-
+.padding_12_top_bottom {
+    padding: 12px 0;
+}
 .padding_10_left_right {
     padding: 0px 10px;
 }
@@ -182,7 +186,9 @@ input:focus {
 .margin_top_10 {
     margin-top: 10px;
 }
-
+.margin_top_12 {
+    margin-top: 12px;
+}
 .margin_bottom_10 {
     margin-bottom: 10px;
 }
@@ -226,6 +232,12 @@ input:focus {
 .margin_10_left_right {
     margin: 0 10px;
 }
+
+.margin_12_left_right {
+    margin: 0 12px;
+}
+
+
 
 /* 宽高 */
 
@@ -478,7 +490,12 @@ input:focus {
 .font20 {
     font-size: 20px;
 }
-
+.font22 {
+    font-size: 22px;
+}
+.font23 {
+    font-size: 23px;
+}
 .font25 {
     font-size: 25px;
 }
@@ -492,7 +509,7 @@ input:focus {
 /* 颜色 */
 
 .color_gray {
-    color: #gray;
+    color: gray;
 }
 
 .color_org {
@@ -598,15 +615,14 @@ input:focus {
     display: flex;
     align-items: center;
 }
-/* 水平居中 */
-
+/* 方向竖直 水平居中 */
 .flex_center_row {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  
+
 .flex_wrap {
     display: flex;
     flex-direction: row;
@@ -642,7 +658,13 @@ input:focus {
 }
 
 /* 箭头 */
+.arrow_right_vant{
+    color:#c8c9cc!important;
 
+}
+.arrow_color{
+    color:#c8c9cc;
+}
 .arrow_left {
     color: #333;
     font-size: 21px;
@@ -704,10 +726,10 @@ input:focus {
 }
 
 .common_container {
-    position: absolute!important;
+    position: relative!important;
     left: 0;
     right: 0;
-    top: 42px;
+    top: 0px;
     bottom: 42px;
     overflow-y: auto;
     overflow-x: hidden;

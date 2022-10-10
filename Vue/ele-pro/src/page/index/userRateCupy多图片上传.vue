@@ -84,7 +84,7 @@
 
 <script>
 import Top from "@/components/Top.vue";
-import { getStore, setStore, isNotBlank } from "../config/mUtils.js";
+import { getStore, setStore, isNotBlank } from "../../config/mUtils.js";
 //引入oss
 var OSS = require("ali-oss");
 import { Toast } from "vant";
@@ -99,8 +99,8 @@ export default {
       rateValue: 0, //评分
       tasteValue: 0, //口味
       packValue: 0, //包装
-      maxCount: 1, //图片最多上传九张
-      url: "",
+      maxCount: 9, //图片最多上传九张
+      url: [],
       fileList: [
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
@@ -128,8 +128,25 @@ export default {
     },
     afterRead(file) {
       let that = this;
-      file.status = "uploading";
-      file.message = "上传中...";
+      // file.status = "uploading";
+      // file.message = "上传中...";
+      let data = qs.stringify({});
+      // const client = new OSS({
+      //   endpoint: "oss-cn-beijing.aliyuncs.com",
+      //   region: "oss-cn-beijing",
+      //   accessKeyId: "LTAIHoVuVW18g0cf",
+      //   accessKeySecret: "IHoKwxkmPc6eNcQsOyCK7nTjYBB4C1",
+      //   bucket: "user-mobile"
+      // });
+      // let imgName = new Date() + file.file.name;
+      // client.multipartUpload(imgName, file.file).then(res => {
+      //   that.url = res.res.requestUrls[0];
+      //   file.status = "success";
+      //   file.message = "上传成功";
+      // });
+    },
+    submit() {
+      let userInfo = getStore("loginUserInfo")&&JSON.parse(getStore("loginUserInfo"));
       const client = new OSS({
         endpoint: "oss-cn-beijing.aliyuncs.com",
         region: "oss-cn-beijing",
@@ -137,42 +154,69 @@ export default {
         accessKeySecret: "IHoKwxkmPc6eNcQsOyCK7nTjYBB4C1",
         bucket: "user-mobile"
       });
-      let imgName = Date.now() + file.file.name;
-      debugger
-      client.multipartUpload(imgName, file.file).then(res => {
-        that.url = res.res.requestUrls[0];
-        file.status = "success";
-        file.message = "上传成功";
-      });
-    },
-    submit() {
-      let userInfo =
-        getStore("loginUserInfo") && JSON.parse(getStore("loginUserInfo"));
-      let data = qs.stringify({
-        restaurant_id: this.$route.query.restaurant_id,
-        user_name: userInfo.name,
-        head_img: userInfo.img_url,
-        rateValue: this.rateValue,
-        tasteValue: this.tasteValue,
-        packValue: this.packValue,
-        appraise_time: Date.now(), //当前时间
-        appraise_detail: this.appraise_detail,
-        appraise_img: JSON.stringify({ id: Date.now(), url: this.url })
-      });
-      let that = this;
-      this.$axios.post("/api/setAppraise", data).then(res => {
-        if (
-          isNotBlank(res) &&
-          isNotBlank(res.data) &&
-          isNotBlank(res.data.result)
-        ) {
-          that.$router.replace({ path: "/order" });
-          Toast("评价成功");
-        }
-      });
+      // for (let i = 0; i < this.fileList.length; i++) {
+      this.uploadOss(client, this.fileList, 0, this);
+      // }
+      // let data = qs.stringify({
+      //   restaurant_id: this.$route.query.restaurant_id,
+      //   user_name: userInfo.name,
+      //   head_img: userInfo.img_url,
+      //   rateValue: this.rateValue,
+      //   tasteValue: this.tasteValue,
+      //   packValue: this.packValue,
+      //   appraise_time: Date.now(), //当前时间
+      //   appraise_detail: this.appraise_detail,
+      //   appraise_img: this.url //评论图片
+      // });
+      // let that = this;
+      // this.$axios.post("/api/setAppraise", data).then(res => {
+      //   if (
+      //     isNotBlank(res) &&
+      //     isNotBlank(res.data) &&
+      //     isNotBlank(res.data.result)
+      //   ) {
+      //     that.$router.replace({ path: "/order" });
+      //     Toast("评价成功");
+      //   }
+      // });
     },
     onOversize(file) {
       Toast("文件大小不能超过 500kb");
+    },
+    uploadOss(client, file, index, that) {
+      // for (let i = 0; i < this.fileList.length; i++) {
+      let imgName = new Date() + that.fileList[index].file.name;
+      if (that.url.length == that.fileList.length) {
+        let data = qs.stringify({
+          restaurant_id: that.$route.query.restaurant_id,
+          user_name: userInfo.name,
+          head_img: userInfo.img_url,
+          rateValue: that.rateValue,
+          tasteValue: that.tasteValue,
+          packValue: that.packValue,
+          appraise_time: Date.now(), //当前时间
+          appraise_detail: that.appraise_detail,
+          appraise_img: that.url //评论图片
+        });
+        that.$axios.post("/api/setAppraise", data).then(res => {
+          if (
+            isNotBlank(res) &&
+            isNotBlank(res.data) &&
+            isNotBlank(res.data.result)
+          ) {
+            that.$router.replace({ path: "/order" });
+            Toast("评价成功");
+          }
+        });
+        return
+      }
+      client.multipartUpload(imgName, that.fileList[index].file).then(res => {
+        ++index;
+        that.uploadOss(file, index);
+        that.url.push(res.res.requestUrls[0]);
+        that.fileList[index].status = "success";
+        that.fileList[index].message = "上传成功";
+      });
     }
   }
 };

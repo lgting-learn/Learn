@@ -32,38 +32,45 @@
 </template>
 
 <script>
+import {removeStore, setStore} from "../config/mUtils";
+import {
+  global,
+} from '../../config/index'
+let pathFinally = (global.PRODUCTFLAG ? (global.PRODUCTIP + '/') : '') + 'static/images/';
+
 export default {
   name: "TabBottom",
   props: ["nav_title", "active"],
   data() {
     return {
+      pathFinally:pathFinally,
       clickFlag: true,
       icon: "home-o",
       color: "",
       span_color: "",
       tabBarImg: [
         {
-          name: "taskaway",
-          src_0: "../../static/images/tab1_1.svg",
-          src_1: "../../static/images/tab1_1.svg",
+          name: "index",
+          src_0: "../../" + pathFinally + "tab1_1.svg",
+          src_1: "../../" + pathFinally + "tab1_1.svg",
           title: "外卖",
         },
         {
           name: "search",
-          src_0: "../../static/images/tab2_0.svg",
-          src_1: "../../static/images/tab2_1.svg",
+          src_0: "../../" + pathFinally + "tab2_0.svg",
+          src_1: "../../" + pathFinally + "tab2_1.svg",
           title: "搜索",
         },
         {
           name: "order",
-          src_0: "../../static/images/tab3_0.svg",
-          src_1: "../../static/images/tab3_1.svg",
+          src_0: "../../" + pathFinally + "tab3_0.svg",
+          src_1: "../../" + pathFinally + "tab3_1.svg",
           title: "订单",
         },
         {
           name: "mine",
-          src_0: "../../static/images/tab4_0.svg",
-          src_1: "../../static/images/tab4_1.svg",
+          src_0: "../../" + pathFinally + "tab4_0.svg",
+          src_1: "../../" + pathFinally + "tab4_1.svg",
           title: "我的",
         },
       ],
@@ -71,9 +78,12 @@ export default {
   },
   methods: {
     changeTab(name) {
+      // 清空路由
+      removeStore("backHistoryArr");
+      setStore("backHistoryArr", [name]);
       this.clickFlag = true;
       // 防止ios触底出现工具栏
-      this.$router.replace({ name: name });
+      this.$router.replace({name: name});
     },
   },
 };
@@ -90,6 +100,7 @@ export default {
     transform: scale(1);
   }
 }
+
 .ballon {
   -webkit-animation-name: scaleDraw; /*关键帧名称*/
   -webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
@@ -101,10 +112,12 @@ export default {
   width: 35px !important;
   height: 35px !important;
 }
+
 .img_big {
   width: 35px;
   height: 35px;
 }
+
 .TabBottom {
   padding: 2px 0;
   flex-grow: 0;
@@ -117,6 +130,7 @@ export default {
   /* position: absolute; */
   height: 42px;
 }
+
 .TabBottom .tab_item img {
   width: 25px;
   height: 25px;
@@ -125,6 +139,7 @@ export default {
 .tab_item {
   flex: 1;
 }
+
 .tab_item span {
   color: black;
   font-size: 14px;

@@ -1,84 +1,68 @@
 <template>
   <div class="login bg_red flex_column_center">
+    <div class="topTip flex_row_center">
+      <span class="span_white font11_center flex_center font23">{{ topTip }}</span>
+    </div>
     <div
       class="login_container flex_column_center border_radius_20 rel"
-      :class="loginOrRegister == 'login' ? '' : 'login_container_reg'"
+      :class="[
+        loginOrRegister == 'login' ? '' : 'login_container_reg',
+        loginOrRegister == 'login' ? 'height_28' : 'height_42',
+      ]"
     >
-      <div class="loginOrRegister flex_between padding_5_top_bottom abs">
+      <div
+        class="ipt_container_top loginOrRegister flex_between flex_center"
+        :class="loginOrRegister == 'login' ? 'padding_5_top_bottom' : ''"
+      >
         <span
-          class="grow_1 flex_center span_black"
-          @click="changeLoginOrReg('login')"
-          :class="loginOrRegister == 'login' ? 'span_red' : ''"
-          >登陆</span
-        >
-        <span
-          class="grow_1 flex_center span_black"
-          @click="changeLoginOrReg('register')"
-          :class="loginOrRegister == 'register' ? 'span_red' : ''"
-          >注册</span
+          v-for="(item, index) in showDataList.tabs"
+          :key="index"
+          class="grow_1 flex_center font16"
+          @click="changeLoginOrReg(item.type)"
+          :class="loginOrRegister == item.type ? 'span_white weight_600' : 'span_black'"
+        >{{ item.title }}</span
         >
       </div>
       <div
-        :class="loginOrRegister == 'login' ? '' : 'hei_20'"
-        class="login_name_out padding_10_left_right login_item border_radius_20 margin_bottom_10 flex_row_center bg_white"
+        class="ipt_container_center flex_center_row"
+        :class="loginOrRegister == 'login' ? 'ipt_container_center_unset' : ''"
       >
-        <img
-          src="../../../static/images/login_user.svg"
-          alt=""
-          class="login_user width_height_20"
-        />
-        <input
-          class="login_name login_item_ipt border_radius_20"
-          placeholder="请输入用户名"
-          v-model="userName"
-        />
-      </div>
-      <div
-        :class="[loginOrRegister == 'login' ? '' : 'margin_bottom_10 hei_20']"
-        class="login_name_out padding_10_left_right login_item border_radius_20 flex_row_center bg_white"
-      >
-        <img
-          src="../../../static/images/login_psw.svg"
-          alt=""
-          class="login_user width_height_20"
-        />
-        <input
-          class="login_name login_item_ipt border_radius_20"
-          placeholder="请输入密码"
-          v-model="userPsw"
-          type="password"
-        />
-      </div>
-      <div
-        :class="loginOrRegister == 'login' ? '' : 'hei_20'"
-        v-show="loginOrRegister != 'login'"
-        class="login_name_out padding_10_left_right login_item border_radius_20 flex_row_center bg_white"
-      >
-        <img
-          src="../../../static/images/login_psw.svg"
-          alt=""
-          class="login_user width_height_20"
-        />
-        <input
-          class="login_name login_item_ipt border_radius_20"
-          placeholder="请再次输入密码"
-          v-model="userPswAgain"
-          type="password"
-        />
+        <div
+          v-for="(item, index) in currentList"
+          :key="index"
+          class="login_name_out padding_10_left_right login_item border_radius_20 flex_row_center bg_white"
+          :class="[
+            loginOrRegister == item.type ? 'span_white weight_600' : 'span_black',
+            loginOrRegister == 'login' ? 'height_42' : 'height_28',
+            loginOrRegister == 'login' && item.type == 'userName'
+              ? 'margin_bottom_10'
+              : '',
+          ]"
+        >
+          <img :src="item.src" alt="" class="login_user width_height_20"/>
+          <input
+            class="login_name login_item_ipt border_radius_20"
+            :placeholder="item.placeholder"
+            :key="loginOrRegister + index"
+            v-model="item.modelName"
+            :type="item.iptType"
+          />
+        </div>
       </div>
 
+      <div class="ipt_container_btm"></div>
       <div
-        class="img_wrap_out width_height_60 flex_center circle abs bg_red"
+        class="img_wrap_out width_height_60 flex_center circle bg_red"
         @click="clickCommit"
       >
         <div class="img_wrap width_height_50 flex_center circle">
-          <img src="../../../static/images/choose.svg" alt="" class="width_height_20" />
+          <img :src="'../../../' +pathFinally+'choose.svg'" alt="" class="width_height_20" />
         </div>
       </div>
     </div>
     <div class="account_tag flex_row_center">
       <div class="tab_line bg_white"></div>
-      <span class="span_white font11_center flex_center">登录帐号</span>
+      <span class="span_white font11_center flex_center">{{ bottomTip }}</span>
       <div class="tab_line bg_white"></div>
     </div>
     <div class="flex_row abs login_method">
@@ -95,58 +79,100 @@
 </template>
 
 <script>
-import { Toast } from "vant";
-var qs = require("qs");
 import {
-  getStore,
-  setStore,
-  preventXSS,
-  isNotBlank,
-  amendHeight,
-} from "../../config/mUtils.js";
+  global,
+} from '../../../config/index'
+import {Toast} from "vant";
+
+let pathFinally = (global.PRODUCTFLAG ? (global.PRODUCTIP + '/') : '') + 'static/images/';
+var qs = require("qs");
+import {setStore, preventXSS, isNotBlank, amendHeight} from "../../config/mUtils.js";
 
 export default {
   data() {
     return {
+      pathFinally:pathFinally,
+      topTip: "Time To Hungry",
+      bottomTip: "登录帐号",
+      showDataList: {
+        tabs: [
+          {type: "login", title: "登录"},
+          {type: "register", title: "注册"},
+        ],
+        options: [
+          {
+            iptType: "",
+            type: "userName",
+            // placeholder: "请输入用户名",
+            placeholder: "请输入1",
+            src: "../../../" + pathFinally + "login_user.svg",
+            modelName: "",
+          },
+          {
+            iptType: "password",
+            type: "password",
+            // placeholder: "请输入密码",
+            placeholder: "请输入1",
+            src: "../../../" + pathFinally + "login_psw.svg",
+            modelName: "",
+          },
+          {
+            iptType: "password",
+            type: "passwordAgain",
+            placeholder: "请再次输入密码",
+            src: "../../../" + pathFinally + "login_psw.svg",
+            modelName: "",
+          },
+        ],
+      },
+
       oldHeight:
         window.innerHeight ||
         document.documentElement.clientHeight ||
         document.body.clientHeight,
-      newHeight: 0,
-      input_editor: 0,
-      showTip: false, //错误实体弹出框
-      errorMsg: "", //错误提示信息
-      userName: "",
-      userPsw: "",
-      userPswAgain: "",
       loginOrRegister: "login",
       imgBtmList: [
-        { img_url: "../../../static/images/login_phone1.svg" },
-        { img_url: "../../../static/images/login_wechat.svg" },
-        { img_url: "../../../static/images/login_qq.svg" },
+        {img_url: "../../../" + pathFinally + "login_phone1.svg"},
+        {img_url: "../../../" + pathFinally + "login_wechat.svg"},
+        {img_url: "../../../" + pathFinally + "login_qq.svg"},
       ],
     };
   },
-  computed: {},
+  computed: {
+    currentList() {
+      let index = 0;
+      let tempArr = this.showDataList.options;
+      if (this.loginOrRegister == "login") {
+        return tempArr.slice(0, 2);
+      } else if (this.loginOrRegister == "register") {
+        return tempArr;
+      }
+    },
+  },
   watch: {},
-  created() {},
+  created() {
+  },
   mounted() {
     // !!!解决输入法压缩整个页面布局
     amendHeight(this.oldHeight, "login");
   },
   methods: {
-    showPopup() {},
+    showPopup() {
+    },
     changeLoginOrReg(type) {
       this.loginOrRegister = type;
-      this.userName = "";
-      this.userPsw = "";
-      this.userPswAgain = "";
+      let tempArr = this.showDataList;
+      // 避免另一个tab输入框的值渲染到当前tab
+      for (let i = 0; i < tempArr.options.length; i++) {
+        tempArr.options[i].modelName = "";
+      }
+      this.showDataList = tempArr;
     },
     clickCommit() {
-      let that = this;
-      let loginOrRegister = that.loginOrRegister;
-      let userName = that.userName.trim(); // 去掉前后空格`
-      let userPsw = that.userPsw.trim();
+      let loginOrRegister = this.loginOrRegister;
+      let userName = this.showDataList.options[0].modelName.trim(); // 去掉前后空格`
+      let userPsw = this.showDataList.options[1].modelName.trim();
+      let userPswAgain = this.showDataList.options[2].modelName.trim();
       let registerTime = Date.now();
       if (!isNotBlank(userName) || !isNotBlank(userPsw)) {
         Toast("用户名或密码不能为空");
@@ -156,19 +182,19 @@ export default {
       if (
         !preventXSS(userName) ||
         !preventXSS(userPsw) ||
-        (loginOrRegister == "register" && !preventXSS(this.userPswAgain))
+        (loginOrRegister == "register" && !preventXSS(userPswAgain))
       ) {
         Toast("操作失败，存在特殊字符<>'\"!＆＃( )%\\");
         return false;
       }
 
       if (loginOrRegister == "register") {
-        if (!isNotBlank(this.userPswAgain) || !isNotBlank(userPsw)) {
+        if (!isNotBlank(userPswAgain) || !isNotBlank(userPsw)) {
           Toast("再次输入密码不能为空");
           return false;
         }
         // 判断两次密码是否一致
-        if (loginOrRegister == "register" && userPsw != this.userPswAgain) {
+        if (loginOrRegister == "register" && userPsw != userPswAgain) {
           Toast("两次密码不一致!");
           return false;
         }
@@ -179,50 +205,90 @@ export default {
         psw: userPsw,
         register_time: registerTime, // 注册时间
       });
-
+      let that = this;
       this.$axios.post("/api/login", data).then((res) => {
         if (res && res.data.result) {
           // 登录成功跳转到首页
-          data = qs.stringify({ name: userName });
+          data = qs.stringify({name: userName});
           that.$axios.post("/api/getUserInfo", data).then((res) => {
-            that.$router.replace({ path: "/mine" });
+            that.$router.replace({path: "/mine"});
             that.sign = res.data.sign;
             that.img_url = res.data.img_url;
             setStore("loginUserInfo", res.data);
           });
         } else {
-          that.showTip = true;
-          that.errorMsg = res.data.msg;
-          Toast(that.errorMsg);
+          res.data.msg && Toast(res.data.msg);
         }
       });
     },
     // 防止xss注入
-    preventXSS() {},
+    preventXSS() {
+    },
   },
 };
 </script>
 
 <style scoped>
+.height_42 {
+  height: 42%;
+}
+
+.height_28 {
+  height: 28%;
+}
+
+.topTip {
+  position: absolute;
+  top: 100px;
+}
+
+.ipt_container_center,
+.ipt_container_btm {
+  width: 100%;
+}
+
+.ipt_container_center.ipt_container_center_unset {
+  justify-content: unset;
+}
+
+.ipt_container_top {
+  height: 20%;
+}
+
+.ipt_container_center {
+  height: 65%;
+  /* padding-bottom: 25px; */
+  justify-content: space-between;
+}
+
+.ipt_container_btm {
+  height: 15%;
+}
+
 .span_red {
   color: #ff461d !important;
 }
+
 .loginOrRegister {
   width: 100%;
-  top: 10px;
+  /* top: 10px; */
 }
+
 .login_arrow {
   top: 16px;
   color: #fff !important;
   position: absolute;
   top: 12px;
 }
+
 .login_method {
   bottom: 7%;
 }
-.login_name_out {
-  /* margin: 0 20px; */
+
+.login_fir_input {
+  /* ma */
 }
+
 .login_item_ipt {
   height: 100%;
   width: 100%;
@@ -232,45 +298,52 @@ export default {
 .account_tag span {
   width: 24%;
 }
+
 .account_tag {
   width: 80%;
   justify-content: center;
 }
+
 .tab_line {
   height: 1px;
   width: 38%;
 }
+
 .account_tag {
   margin-top: 40px;
 }
+
 .img_wrap_out {
-  bottom: -30px;
+  top: 100%;
+  position: absolute;
+  margin-top: -25px;
 }
+
 .img_wrap {
-  /* bottom: -30px; */
   background: rgba(255, 255, 255, 0.4);
 }
-.img_wrap img {
-  /* width: 20px; */
-}
+
 .login_container_reg {
-  height: 41% !important;
-}
-.hei_20 {
-  height: 18% !important;
+  height: 43% !important;
 }
 
 .login_container {
   width: 80%;
-  height: 33%;
+  height: 32%;
   background: rgba(255, 255, 255, 0.4);
   align-items: center;
 }
+
+.login_container input {
+  padding-left: 3px;
+}
+
 .login_item {
   width: 80%;
-  height: 22%;
+  /* height: 30%; */
   border: 0px;
 }
+
 .login {
   align-items: center;
   position: absolute;

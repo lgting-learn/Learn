@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <!-- TODO -->
-    <!-- 
+    <!--
       :class="skeleton_loading?'':'display_hidden'"
      -->
     <!-- 骨架屏 -->
     <div
       class="skeleton_container flex_column fixed_full"
-      :class="skeleton_loading ? '' : 'display_hidden'"
+      :class="skeleton_loading? '' : 'display_hidden'"
     >
       <div class="skeleton_container_top">
         <div class="skeleton_top bg_black_2E2F3B padding_btm_10">
@@ -58,7 +58,7 @@
       </div>
     </div>
     <!-- 动态类名 多个条件判断 -->
-    <!-- 
+    <!--
     :class="[active==0?'fixed_full':'shop_full_active',skeleton_loading?'':'display_block']"
 TODO
    -->
@@ -67,13 +67,13 @@ TODO
       class="shop flex_column display_hidden"
       :class="[
         active == 0 ? 'fixed_full' : 'shop_full_active',
-        skeleton_loading ? '' : 'display_block',
+        skeleton_loading? '' : 'display_block',
       ]"
     >
       <div class="shop_top flex_row padding_10 grow_0 bg_black_2E2F3B">
         <span
           class="arrow_left van-icon van-icon-arrow-left van-nav-bar__arrow"
-          @click="turnIndex()"
+          @click="back"
         ></span>
         <img
           class="shop_top_left border_radius_5"
@@ -86,7 +86,7 @@ TODO
           </h3>
           <span class="ellipsis span_white">商家配送／30分钟送达／配送费¥5</span>
           <span class="ellipsis span_white"
-            >公告：欢迎光临，用餐高峰请提前下单，谢谢公告：欢迎光临，用餐高峰请提前下单，谢谢</span
+          >公告：欢迎光临，用餐高峰请提前下单，谢谢公告：欢迎光临，用餐高峰请提前下单，谢谢</span
           >
         </div>
       </div>
@@ -95,14 +95,14 @@ TODO
           <span
             @click="changeTab(0)"
             :class="active == 0 ? 'span_active span_black weight_600' : ''"
-            >商品</span
+          >商品</span
           >
         </div>
         <div class="shop_tab_item flex_center">
           <span
             @click="changeTab(1)"
             :class="active == 1 ? 'span_active span_black weight_600' : ''"
-            >评价</span
+          >评价</span
           >
         </div>
       </div>
@@ -158,7 +158,7 @@ TODO
                   <div class="flex_column grow_1">
                     <span class="color_black3 font14 weight_600">{{ itemss.name }}</span>
                     <span
-                      >月售{{ itemss.month_sales }}份 好评率{{
+                    >月售{{ itemss.month_sales }}份 好评率{{
                         itemss.satisfy_rate
                       }}%</span
                     >
@@ -171,7 +171,7 @@ TODO
                             class="bg_yellow border_radius_50 span_black num_change num_reduce flex_center"
                             @click="numChange(0, itemss.id, itemss.restaurant_id)"
                             :class="itemss.buy_number > 0 ? 'visible' : 'hidden'"
-                            src="../../static/images/reduce.svg"
+                            :src="pathFinally+'reduce.svg'"
                           />
                           <div class="num_show" v-show="itemss.buy_number > 0">
                             {{ itemss.buy_number }}
@@ -179,7 +179,7 @@ TODO
                           <img
                             class="bg_yellow border_radius_50 span_black num_change num_add flex_center"
                             @click="numChange(1, itemss.id, itemss.restaurant_id)"
-                            src="../../static/images/add.svg"
+                            :src="pathFinally+'add.svg'"
                           />
                         </div>
                       </div>
@@ -194,7 +194,8 @@ TODO
         <div class="shop_cart commit_order btm border_radius_50 flex_row">
           <div class="flex_row bg_black shop_cart_left_wrap">
             <div class="flex_column_center shop_cart_left padding_5">
-              <img class="width_height_20" src="../../static/images/shop_msg.svg" />
+              <img class="width_height_20"
+                   :src="pathFinally+'shop_msg.svg'"/>
               <span class="font10_center span_yellow">联系商家</span>
             </div>
             <div
@@ -203,13 +204,13 @@ TODO
             >
               <img
                 class="shop_cart_img abs width_height_30"
-                src="../../static/images/shop_cart.svg"
+                :src="pathFinally+'shop_cart.svg'"
                 alt=""
               />
               <span
                 class="bg_red flex_center span_white circle cart_num"
                 v-show="foodsTotal > 0"
-                >{{ foodsTotal }}</span
+              >{{ foodsTotal }}</span
               >
               <!-- </div> -->
             </div>
@@ -221,18 +222,12 @@ TODO
               <span class="span_white font16 weight_600 abs">￥{{ foodsPrice }}</span>
             </div>
           </div>
-          <router-link
-            :to="{
-              path: '/confirmOrder',
-              query: {
-                restaurant_id: restaurant_id,
-                restaurant_name: restaurant_name,
-                user_id: user_id,
-              },
-            }"
+          <div
+            @click="turnConfirmOrder"
             class="shop_cart_right_wrap amount bg_yellow flex_center abs grow_0 weight_600 span_black"
-            >去结算</router-link
           >
+            {{ payTip }}
+          </div>
         </div>
         <!-- 点击购物车弹出购物清单 -->
         <van-popup v-model="show" position="bottom" :style="{ height: '30%' }">
@@ -240,7 +235,7 @@ TODO
             <!-- <span>购物车</span> -->
             <div class="flex_row_center rel" @click="clearFoodList">
               <img
-                src="../../static/images/shop_trash.svg"
+                :src="pathFinally+'shop_trash.svg'"
                 alt=""
                 class="width_height_15 abs trash_img"
               />
@@ -262,7 +257,7 @@ TODO
                     class="bg_yellow border_radius_50 span_black num_change num_reduce flex_center"
                     @click="numChange(0, item.id, item.restaurant_id)"
                     v-show="item.buy_number > 0"
-                    src="../../static/images/reduce.svg"
+                    :src="pathFinally+'reduce.svg'"
                     :class="item.buy_number > 0 ? 'visible' : 'hidden'"
                   />
                   <div class="num_show" v-show="item.buy_number > 0">
@@ -271,7 +266,7 @@ TODO
                   <img
                     class="bg_yellow border_radius_50 span_black num_change num_add flex_center"
                     @click="numChange(1, item.id, item.restaurant_id)"
-                    src="../../static/images/add.svg"
+                    :src="pathFinally+'add.svg'"
                   />
                 </div>
               </div>
@@ -303,8 +298,8 @@ TODO
         <div class="appraise_top flex_row padding_10 flex_between display_hidden">
           <div class="appraise_top_item flex_column flex_center margin_right_10">
             <span class="span_yellow font25 weight_600">{{
-              shopRateObj.restaurant_rate
-            }}</span>
+                shopRateObj.restaurant_rate
+              }}</span>
             <span class="font11_center">商家评分</span>
           </div>
           <div class="appraise_top_item flex_column flex_center">
@@ -318,8 +313,8 @@ TODO
                 void-color="#eee"
               />
               <span class="span_yellow margin_left_10">{{
-                shopRateObj.restaurant_taste_rate
-              }}</span>
+                  shopRateObj.restaurant_taste_rate
+                }}</span>
             </div>
             <div class="flex_row flex_center">
               <span class="margin_right_10 font11_center">包装</span>
@@ -331,13 +326,13 @@ TODO
                 void-color="#eee"
               />
               <span class="span_yellow margin_left_10">{{
-                shopRateObj.restaurant_pack_rate
-              }}</span>
+                  shopRateObj.restaurant_pack_rate
+                }}</span>
             </div>
           </div>
           <div class="appraise_top_item flex_column flex_center">
             <span class="span_gray font20"
-              >{{ shopRateObj.distribution_satisfied_rate }}%</span
+            >{{ shopRateObj.distribution_satisfied_rate }}%</span
             >
             <span class="span_gray font11_center">配送满意度</span>
           </div>
@@ -382,8 +377,8 @@ TODO
                   </div>
                 </div>
                 <span class="font11_right abs right_0 top_0">{{
-                  item.appraise_time
-                }}</span>
+                    item.appraise_time
+                  }}</span>
               </div>
               <div class="item_center flex_column">
                 <div class="font12 span_black margin_bottom_5">
@@ -420,41 +415,48 @@ TODO
 <script>
 import BScroll from "better-scroll";
 import AddAndReduce from "@/components/AddAndReduce.vue";
-import { getStore, setStore, isNotBlank } from "../config/mUtils.js";
-import { all } from "q";
-import { Toast } from "vant";
-import { Skeleton, ImagePreview } from "vant";
-var qs = require("qs");
+import {getStore, setStore, isNotBlank, setHistory, back} from "../../config/mUtils.js";
+import {all} from "q";
+import {Toast} from "vant";
+import {Skeleton, ImagePreview} from "vant";
+import {
+  global,
+} from '../../../config/index'
+let pathFinally = (global.PRODUCTFLAG ? (global.PRODUCTIP + '/') : '') + 'static/images/';
+
+let qs = require("qs");
 export default {
-  components: { AddAndReduce },
+  components: {AddAndReduce},
   data() {
     return {
+      pathFinally:pathFinally,
+      payTip: "去结算",
       start: 0,
       limit: 10,
       imgArr: [],
-      skeleton_loading: true, //骨架屏，店铺详情true显示
-      skeleton_loading_appraise: true, //骨架屏，评论 true显示
-      loading_done: false, //点击评论tab只请求一次接口，设置全局变量
-      shopRateObj: {}, //店铺评分详情
-      appraiseList: [], //评价列表
-      value: 2.5, //评分
+      // true显示骨架屏；从订单详情返回shop，skeleton_loading为false，不显示骨架屏
+      skeleton_loading: this.$route.query.skeleton_loading || true,
+      skeleton_loading_appraise: true, // 骨架屏，评论 true显示
+      loading_done: false, // 点击评论tab只请求一次接口，设置全局变量
+      shopRateObj: {}, // 店铺评分详情
+      appraiseList: [], // 评价列表
+      value: 2.5, // 评分
       user_id: "",
-      show: false,
       shopDetail: "",
       active: 0,
-      foodsTotal: 0, //选购食品总数
-      foodsPrice: 0, //选购食品总价格
+      foodsTotal: 0, // 选购食品总数
+      foodsPrice: 0, // 选购食品总价格
       show: false,
       goodList: [],
-      amountList: [], //食品结算清单
-      scrollY: 0, //获取实时滚动位置
-      heightList: [], //获取每一个li的高度 };
-      restaurant_id: "", //店铺id
-      restaurant_name: "", //店铺名称
+      amountList: [], // 食品结算清单
+      scrollY: 0, // 获取实时滚动位置
+      heightList: [], // 获取每一个li的高度 };
+      restaurant_id: "", // 店铺id
+      restaurant_name: "", // 店铺名称
     };
   },
   computed: {
-    //左右联动
+    // 左右联动
     currentIndex() {
       const index = this.heightList.findIndex((item, index) => {
         this._initLeftScroll(index);
@@ -469,7 +471,7 @@ export default {
   watch: {},
   // router跳转离开列表页前，记录当前页面的位置
   beforeRouteLeave(to, from, next) {
-    //设置下一个路由的meta,让列表页面缓存,即不刷新
+    // 设置下一个路由的meta,让列表页面缓存,即不刷新
     to.meta.keepAlive = true;
     next();
   },
@@ -477,18 +479,26 @@ export default {
     this.initData();
   },
   methods: {
-    turnIndex() {
-      window.history.replaceState([], "", "");
+    turnConfirmOrder() {
       this.$router.replace({
-        name: this.$route.query.backPageName,
+        path: "/confirmOrder",
+        query: {
+          restaurant_id: this.restaurant_id,
+          restaurant_name: this.restaurant_name,
+          user_id: this.user_id,
+          title: this.$route.query.title,
+        },
       });
+    },
+    back() {
+      back(this);
     },
 
     initData() {
       let restaurant_id = this.$route.query.restaurant_id;
-      this.restaurant_id = this.$route.query.restaurant_id;
+      this.restaurant_id = restaurant_id;
       let that = this;
-      let data = qs.stringify({ restaurant_id: restaurant_id });
+      let data = qs.stringify({restaurant_id: restaurant_id});
 
       //获取左侧菜单
       this.$axios.post("/api/shopFoodClassify", data).then(function (res) {
@@ -498,7 +508,7 @@ export default {
             if (that.goodListReal[i].foods) {
               for (let j = 0; j < that.goodListReal[i].foods.length; j++) {
                 that.goodListReal[i].foods[j].image_path &&
-                  that.imgArr.push(that.goodListReal[i].foods[j].image_path);
+                that.imgArr.push(that.goodListReal[i].foods[j].image_path);
                 that.goodListReal[i].foods[j].preview_index = that.imgArr.length - 1;
               }
             }
@@ -514,11 +524,11 @@ export default {
         //因此在 nextTick回调函数里面调用可以是实现此功能
         that.$nextTick(() => {
           that._scrollInit();
-          that.getHeight();
+          that.getHeight(that);
         });
       });
       //获取单间店铺详情
-      data = qs.stringify({ id: restaurant_id });
+      data = qs.stringify({id: restaurant_id});
       this.$axios.post("/api/shopSingle", data).then((res) => {
         that.shopDetail = res.data;
         that.restaurant_name = res.data.name;
@@ -553,7 +563,7 @@ export default {
         start: this.start,
         limit: this.limit,
       });
-      var that = this;
+      let that = this;
       this.$axios.post("/api/getShopAppraise", data).then((res) => {
         if (res.data.length == that.limit) {
           that.start += that.limit;
@@ -564,7 +574,7 @@ export default {
         that.skeleton_loading_appraise = false; //取消评论骨架屏
         if (res.data.length > 0) {
           that.appraiseList = res.data;
-          var timestamp = "";
+          let timestamp = "";
           //遍历评论
           if (that.appraiseList.length > 0) {
             for (let i = 0; i < that.appraiseList.length; i++) {
@@ -572,8 +582,8 @@ export default {
               //设置默认头像
               that.appraiseList[i].head_img = that.appraiseList[i].head_img
                 ? that.appraiseList[i].head_img
-                : "../../static/images/default_headImg.svg";
-              var timeInit = that.appraiseList[i].appraise_time;
+                : "../../"+that.pathFinally+"default_headImg.svg";
+              let timeInit = that.appraiseList[i].appraise_time;
               if (timeInit.length == 10) {
                 //十位时间戳 单位：秒
                 timestamp = new Date(parseInt(timeInit) * 1000); //直接用 new Date(时间戳) 格式转化获得当前时间
@@ -581,16 +591,16 @@ export default {
                 //十三位时间戳 单位：毫秒
                 timestamp = new Date(parseInt(timeInit)); //直接用 new Date(时间戳) 格式转化获得当前时间
               }
-              var year = timestamp.getFullYear();
+              let year = timestamp.getFullYear();
 
-              var month = timestamp.getMonth() + 1;
+              let month = timestamp.getMonth() + 1;
 
-              var date = timestamp.getDate();
-              // var time =
+              let date = timestamp.getDate();
+              // let time =
               //   timestamp.toLocaleDateString().replace(/\//g, "-") +
               //   " " +
               //   timestamp.toTimeString().substr(0, 8);
-              var time = year + "." + month + "." + date;
+              let time = year + "." + month + "." + date;
               that.appraiseList[i].appraise_time = time;
               //截取存储到阿里云的图片,如：
               //http://user-mobile.oss-cn-beijing.aliyuncs.com/8504945.jpg?uploadId=B43DA80116594F62B497CD328C89BD31
@@ -604,7 +614,7 @@ export default {
                 that.appraiseList[i].appraise_img = JSON.parse(
                   that.appraiseList[i].appraise_img
                 );
-                //遍历评论中的图片
+                // 遍历评论中的图片
                 for (let j = 0; j < that.appraiseList[i].appraise_img.length; j++) {
                   that.appraiseList[i].appraise_img[j].url =
                     that.appraiseList[i].appraise_img[j].url.indexOf("?uploadId") > -1
@@ -613,8 +623,6 @@ export default {
                   that.imgArr.push(that.appraiseList[i].appraise_img[j].url);
                   that.appraiseList[i].appraise_img[j].preview_index =
                     that.imgArr.length - 1;
-                  console.log("0321==", that.appraiseList[i].appraise_img);
-                  console.log("0321==that.imgArr  ", that.imgArr);
                 }
               }
             }
@@ -623,9 +631,9 @@ export default {
       });
     },
     initCart() {
-      var that = this;
+      let that = this;
       //获取最新菜单
-      let data = qs.stringify({ restaurant_id: this.restaurant_id });
+      let data = qs.stringify({restaurant_id: this.restaurant_id});
       this.$axios.post("/api/shopFoodClassify", data).then(function (res) {
         that.goodListCart = res.data;
         //type:1增加 id:当前食品id restaurant_id:店铺id
@@ -638,9 +646,9 @@ export default {
     },
     //改变食品选购数量
     numChange(type, id, restaurant_id) {
-      var that = this;
+      let that = this;
       //获取最新菜单
-      let data = qs.stringify({ restaurant_id: this.restaurant_id });
+      let data = qs.stringify({restaurant_id: this.restaurant_id});
       this.$axios.post("/api/shopFoodClassify", data).then(function (res) {
         that.goodList = res.data;
         //type:1增加 id:当前食品id restaurant_id:店铺id
@@ -680,9 +688,9 @@ export default {
       });
     }, //获取食品总数量
     getFoodsTotal(arr) {
-      var num = 0;
-      var price = 0;
-      var amountList = []; //食品结算清单
+      let num = 0;
+      let price = 0;
+      let amountList = []; //食品结算清单
       if (arr.length > 0) {
         arr.forEach((item) => {
           if (item.foods && item.foods.length > 0) {
@@ -707,8 +715,8 @@ export default {
 
     //清空购物车
     clearFoodList() {
-      var that = this;
-      var data = qs.stringify({ restaurant_id: this.restaurant_id });
+      let that = this;
+      let data = qs.stringify({restaurant_id: this.restaurant_id});
       //批量更新食品表
       this.$axios.post("/api/batchUpdateFoods", data).then((res) => {
         if (res.data.result == true || res.data.result == "true") {
@@ -740,7 +748,7 @@ export default {
     //重新获取菜单数据
     getData(restaurant_id) {
       let that = this;
-      let data = qs.stringify({ restaurant_id: restaurant_id });
+      let data = qs.stringify({restaurant_id: restaurant_id});
       //获取左侧菜单
       this.$axios.post("/api/shopFoodClassify", data).then(function (res) {
         that.goodList = res.data;
@@ -784,21 +792,24 @@ export default {
       });
     },
     //获取右侧菜单高度
-    getHeight() {
+    getHeight(that) {
       //获取每一个li的高度
-      const lis = this.$refs.rItem;
-      //heightList的第一个元素为0
-      let height = 0;
-      this.heightList.push(height);
-      //之后的高度即为当前li的高度加上之前面li的高度和
-      lis.forEach((item) => {
-        height += item.clientHeight;
-        this.heightList.push(height);
-      });
+      const lis = that.$refs.rItem || [];
+      if (lis.length != 0) {
+        //heightList的第一个元素为0
+        let height = 0;
+        that.heightList.push(height);
+        //之后的高度即为当前li的高度加上之前面li的高度和
+        lis.forEach((item) => {
+          height += item.clientHeight;
+          that.heightList.push(height);
+        });
+      }
     },
   },
 
   mounted() {
+    setHistory(this);
     //初始化 购物车
     this.initCart();
   },
@@ -809,9 +820,11 @@ export default {
 .shop_detail_left {
   height: 74% !important;
 }
+
 .shop_detail_left_finally {
   height: 91% !important;
 }
+
 .skeleton_appraise .van-skeleton {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -820,135 +833,172 @@ export default {
 .skeleton_appraise .van-skeleton__content {
   padding-top: 0px;
 }
+
 .skeleton_appraise .van-skeleton__content .van-skeleton__title {
   height: 10px;
 }
+
 .skeleton_appraise .van-skeleton__content .van-van-skeleton__row {
   margin-top: 10px;
 }
+
 .skeleton_right_fill {
   background: #f2f3f5;
   width: 100%;
   height: 25px;
 }
+
 .skeleton_container_top {
   flex: 1;
 }
+
 .skeleton_container_btm {
   flex: 6;
 }
+
 .skeleton_left {
   flex: 1;
 }
+
 .skeleton_left .van-skeleton {
   flex: 1;
   background: #f2f3f5;
 }
+
 .skeleton_left .van-skeleton .van-skeleton__content {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .skeleton_left .van-skeleton .van-skeleton__content .van-skeleton__title {
   background: #fff;
 }
+
 .skeleton_right {
   flex: 3;
 }
+
 .skeleton_right .van-skeleton {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
 .skeleton_right .van-skeleton .van-skeleton__content {
   padding-top: 0;
 }
+
 .skeleton_right .van-skeleton__row {
   height: 10px;
   margin-top: 10px;
 }
+
 .skeleton_down .van-skeleton {
   flex: 1;
 }
+
 .skeleton_down .van-skeleton .van-skeleton__content {
   display: flex;
   justify-content: center;
 }
+
 .skeleton_down .van-skeleton .van-skeleton__content .van-skeleton__title {
   height: 20px;
 }
+
 .skeleton_top .van-skeleton {
   padding-top: 10px;
 }
+
 .shop_full_active {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .appraise_detail {
   padding-top: 0;
   padding-bottom: 0;
 }
+
 .addAndReduce {
   width: 30%;
 }
+
 .addAndReduce_cart {
   width: 60px;
   position: absolute;
   right: 10px;
 }
+
 .list_detail_item .food_title {
   width: auto;
 }
+
 .trash_img {
   left: -2px;
 }
+
 .shop_cart_img {
   top: 50%;
   margin-top: -15px;
 }
+
 .shop_cart_left_wrap {
   width: 80%;
 }
+
 .shop_cart_right_wrap {
   width: 20%;
 }
+
 .shop_cart_left {
   align-items: center;
   border-right: 3px solid #fff;
 }
+
 .circle_cart_img {
 }
+
 .shop_top .arrow_left {
   color: white;
 }
+
 .van-popup {
   height: auto !important;
   z-index: 2006;
   padding-bottom: 60px;
 }
+
 .list_detail_item {
   padding: 10px;
 }
+
 .food_num {
   height: 100%;
   width: 100%;
   justify-content: space-between;
 }
+
 .food_price {
   height: 100%;
   width: 20%;
 }
+
 .food_title {
   height: 100%;
   width: 60%;
 }
+
 .all_price {
   height: 100%;
   width: 44%;
 }
+
 .amount {
   right: 0;
   height: 100%;
 }
+
 .cart_num {
   width: 15px;
   height: 15px;
@@ -957,15 +1007,18 @@ export default {
   right: 8px;
   top: 9px;
 }
+
 .circle_cart_wrap {
   position: relative;
   width: 50px;
   height: 50px;
 }
+
 .circle_cart {
   width: 50px;
   height: 100%;
 }
+
 /* TODO */
 .num_change {
   height: 18px;
@@ -984,16 +1037,19 @@ export default {
   height: 100%;
   overflow: hidden;
 }
+
 .goodMenu,
 .goodList {
   overflow-y: auto;
 }
+
 .shop_detail {
   /* 高度有问题 */
   height: 91%;
   position: relative;
   overflow: hidden;
 }
+
 .right_title {
 }
 
@@ -1002,21 +1058,26 @@ export default {
   height: 58px;
   margin-right: 10px;
 }
+
 .shop_top_right h3 {
   flex: 1;
 }
+
 .shop_top_right span {
   flex: 1;
   width: 50%;
 }
+
 .shop_top_right {
   position: relative;
 }
+
 .shop_tab_item {
   flex: 1;
   padding: 8px 0 8px 0;
   border-bottom: 0.026667rem solid #e4e4e4;
 }
+
 .shop_tab_item span {
   font-size: 14px;
 }
@@ -1031,16 +1092,19 @@ export default {
   padding: 13px 10px;
   display: flex;
 }
+
 .ul_left li img {
   width: 15px;
   height: 15px;
   margin-right: 5px;
 }
+
 .img_pic_wrap {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
 .img_pic_single {
   width: 30%;
   padding-top: 0%;
@@ -1051,9 +1115,11 @@ export default {
 .img_pic_single .van-image {
   width: 100%;
 }
+
 .appraise_detail_item {
   padding-bottom: 1px;
 }
+
 .appraise_detail_item .item_center {
   margin-left: 40px;
 }

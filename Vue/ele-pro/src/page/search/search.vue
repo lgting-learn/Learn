@@ -9,10 +9,7 @@
       placeholder="请输入商家名称"
       @search="searchTarget"
     />
-    <!-- <input
-      type="text"
-      class="search_ipt_test"
-    > -->
+
     <div class="search_container_out bg_white">
       <div
         class="search_container bg_gray"
@@ -29,45 +26,47 @@
               v-for="item in searchHistory"
               :key="item"
               @click="searchTargetItem(item)"
-            >{{item}}</span>
+            >{{ item }}</span>
           </div>
         </div>
-    </div>
-    <div
-      class="vanlist_wrap"
-      v-show="searchShopArr.length>0"
-    >
-
-      <van-swipe-cell
-        v-for="(item,index) in searchShopArr"
-        :key="index"
+      </div>
+      <div
+        class="vanlist_wrap"
+        v-show="searchShopArr.length>0"
       >
 
-        <!-- <van-cell :border="false" title="单元格" value="内容" /> -->
-        <div
-          class="flex_row result_item"
-          :class="index==0?'border_none':''"
+        <van-swipe-cell
+          v-for="(item,index) in searchShopArr"
+          :key="index"
         >
 
-          <van-image
-            cover
-            round
-            lazy-load
-            :src="item.image_path"
-            alt=""
-            class="search_result_left width_height_50 grow_0"
-          />
+          <!-- <van-cell :border="false" title="单元格" value="内容" /> -->
+          <div
+            class="flex_row result_item"
+            :class="index==0?'border_none':''"
+          >
 
-          <div class="search_result_rgt flex_column grow_1">
+            <van-image
+              cover
+              round
+              lazy-load
+              :src="item.image_path"
+              alt=""
+              class="search_result_left width_height_50 grow_0"
+            />
+
+            <div class="search_result_rgt flex_column grow_1">
             <span
               class="some-info weight_600 color_black3"
               v-html="item.name"
             ></span>
               <div class="flex_column">
-                <div class="font12 color_gray margin_right_5 font10_left">{{item.score}}分</div>
-                <div class="font12 color_gray ellipsis seach_month_sale font10_left">人均￥{{item.per_capita}}|月售{{item.month_sales}}</div>
+                <div class="font12 color_gray margin_right_5 font10_left">{{ item.score }}分</div>
+                <div class="font12 color_gray ellipsis seach_month_sale font10_left">
+                  人均￥{{ item.per_capita }}|月售{{ item.month_sales }}
+                </div>
               </div>
-          </div>
+            </div>
           </div>
           <template #right>
             <van-button
@@ -81,19 +80,20 @@
               text="备注"
             />
           </template>
-          </van-swipe-cell>
+        </van-swipe-cell>
 
-          </div>
-          <div
-            class="flex_center padding_5_top_bottom font10_center"
-            v-if="loading_flag"
-          >加载中...</div>
-            <TabBottom
-              :nav_title="nav_title"
-              :active="active"
-            ></TabBottom>
-              </div>
-              </div>
+      </div>
+      <div
+        class="flex_center padding_5_top_bottom font10_center"
+        v-if="loading_flag"
+      >加载中...
+      </div>
+      <TabBottom
+        :nav_title="nav_title"
+        :active="active"
+      ></TabBottom>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -103,9 +103,11 @@ import {
   setStore,
   isNotBlank,
   amendHeight,
-  throttle
-} from "../config/mUtils";
-import { Search } from "vant";
+  throttle,
+  setHistory,
+} from "../../config/mUtils";
+import {Search} from "vant";
+
 let qs = require("qs");
 
 export default {
@@ -130,7 +132,7 @@ export default {
       finished: false
     };
   },
-  components: { TabBottom },
+  components: {TabBottom},
 
   computed: {},
   watch: {},
@@ -162,8 +164,8 @@ export default {
       let allHeight =
         document.querySelector(".result_item") &&
         document.querySelector(".result_item").clientHeight *
-          this.searchShopArr.length +
-          search_container_height;
+        this.searchShopArr.length +
+        search_container_height;
 
       //!!!移动端触底加载 请求数据偶尔异常原因 这里多次执行getData()
       if (innerHeight + scrollTop >= allHeight) {
@@ -189,12 +191,13 @@ export default {
         start: that.start,
         limit: that.limit
       });
-      this.$axios.post("/api/searchShop", data).then(function(res) {
-      that.scroll_num = 0;
-        if (res && res.data) {
+      this.$axios.post("/api/searchShop", data).then(function (res) {
+        that.scroll_num = 0;
+        if (res && res.data && res.data.data) {
+          let responesData = res.data.data;
           that.loading_flag = false;
 
-          res.data.forEach(item => {
+          responesData.forEach(item => {
             that.searchShopArr.push(item);
           });
           that.searchShopArr.forEach(item => {
@@ -206,9 +209,9 @@ export default {
               );
             }
           });
-          if (res.data.length == that.limit) {
+          if (responesData.length == that.limit) {
             that.start += that.limit;
-           } else {
+          } else {
             that.search_done = true; //最后一页
           }
         }
@@ -228,8 +231,8 @@ export default {
       this.searchShopArr = []; //清空搜索结果
       this.search = search;
 
-      var arr = JSON.parse(getStore("searchHistory"));
-      var flag = "";
+      let arr = JSON.parse(getStore("searchHistory"));
+      let flag = "";
       if (!isNotBlank(arr)) {
         flag = false;
       } else {
@@ -242,7 +245,7 @@ export default {
       this.getData(search, "fir");
     },
     //清空历史记录
-    clearHistory() {  
+    clearHistory() {
       this.searchHistory = [];
       setStore("searchHistory", this.searchHistory);
     }
@@ -252,19 +255,64 @@ export default {
     window.addEventListener("scroll", throttle(this.handleScroll, 5), true);
   },
   mounted() {
+    setHistory(this);
+
     if (getStore("searchHistory")) {
       this.searchHistory = JSON.parse(getStore("searchHistory"));
     }
     // !!!解决输入法压缩整个页面布局
     amendHeight(this.oldHeight, "search");
     // document.querySelector('.search_container_out').onscroll=()=>{
-    //   console.log('触底');
     // }
   }
 };
 </script>
 
-<style >
+<style>
+/*
+van-search组件
+搜索和订单页面的搜索组件样式
+*/
+.van-search {
+  height: 42px;
+  position: relative;
+  flex-grow: 0 !important;
+}
+
+/*
+van-search组件 设置placeholder的字体大小
+*/
+.van-field__control::-webkit-input-placeholder {
+  font-size: 16px !important;
+  -webkit-transform: scale(0.8) !important;
+  /*解决缩小后字体不居中显示问题*/
+  -webkit-transform-origin-x: left !important;
+}
+
+.van-field__control::-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-size: 16px !important;
+  -webkit-transform: scale(0.8) !important;
+  /*解决缩小后字体不居中显示问题*/
+  -webkit-transform-origin-x: left !important;
+}
+
+.van-field__control::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-size: 16px !important;
+  -webkit-transform: scale(0.8) !important;
+  /*解决缩小后字体不居中显示问题*/
+  -webkit-transform-origin-x: left !important;
+}
+
+.van-field__control::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  font-size: 16px !important;
+  -webkit-transform: scale(0.8) !important;
+  /*解决缩小后字体不居中显示问题*/
+  -webkit-transform-origin-x: left !important;
+}
+
 .search_ipt_test {
   height: 30px;
   border: 1px solid;
@@ -273,9 +321,11 @@ export default {
   height: 40px;
   width: 200px;
 }
+
 .search_container_out {
   overflow-y: auto;
   margin-bottom: 45px;
+  position: relative;
 }
 
 .result_item {
@@ -288,15 +338,13 @@ export default {
 .search_result_left {
   margin-right: 5px;
 }
+
 .search .van-swipe-cell__right .van-button {
   height: 100% !important;
 }
+
 .van-swipe-cell__right .van-button__text {
   color: #fff;
-}
-.vanlist_wrap .goods-card {
-  /* margin: 0;
-    background-color: @white; */
 }
 
 .vanlist_wrap .delete-button {
@@ -309,10 +357,12 @@ export default {
   height: auto;
   /* border-top: 10px solid #f6f6f6; */
 }
+
 .search_container_up {
   border-bottom: 10px solid #f6f6f6;
   padding-bottom: 0;
 }
+
 .history_item {
   background: #f6f6f6;
   padding: 3px 8px;
@@ -321,16 +371,19 @@ export default {
   display: block;
   line-height: 22px;
 }
+
 .search_container_top {
   width: 91%;
   position: absolute;
   right: 0;
 }
+
 .find {
   margin-left: 3px;
   border-radius: 14px;
   width: 16%;
 }
+
 .search_ipt {
   width: 80%;
   border-radius: 21px;
@@ -338,6 +391,7 @@ export default {
   /* padding-left: 10px;
   padding-right: 10px; */
 }
+
 .search_content {
   flex-grow: 1;
 }

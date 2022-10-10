@@ -1,6 +1,6 @@
 <template>
   <div class="food flex_column fixed_full">
-    <Top :nav_title="nav_title" :backPageName="backPageName"></Top>
+    <Top :nav_title="nav_title"></Top>
 
     <div
       class="food_container flex_column common_container"
@@ -25,33 +25,19 @@
         </div>
       </div>
       <div class="food_show near_shop_show grow_1 rel">
-        <vue-waterfall-easy
+        <waterFall
           :imgsArr="imgsArr"
-          @scrollReachBottom="getData"
-          isRouterLink="true"
-          @click="clickFn"
-          ref="waterfall"
-        >
-          <div class="img-info padding_10" slot-scope="props">
-            <!-- <p class="some-info">第{{props.index+1}}张图片</p> -->
-            <p class="some-info weight_600 color_black3">{{ props.value.info }}</p>
-            <div class="flex_row_center">
-              <p class="some-info font12 color_org task_score margin_right_5">
-                {{ props.value.score }}分
-              </p>
-              <p class="some-info font12 color_gray ellipsis task_introduce">
-                {{ props.value.introduce }}
-              </p>
-            </div>
-            <div class="flex_row_center">
-              <div class="some-info font10_left color_gray ellipsis task_item_btm">
-                人均￥{{ props.value.per_capita }}|月售{{ props.value.month_sales }}
-              </div>
-            </div>
-          </div>
-          <!-- 数据加载完 默认提示语：被你看完了 -->
-          <div slot="waterfall-over">被你看完啦</div>
-        </vue-waterfall-easy>
+          :columns="columns"
+          :nav_title="nav_title"
+          :category="category"
+          :shop_start="shop_start"
+          :shop_limit="shop_limit"
+          ref="waterFall"
+          :waterFullBottom="waterFullBottom"
+          :waterFullPadding="waterFullPadding"
+          @getData="getData"
+        ></waterFall>
+
         <van-popup v-model="show" position="top" :style="{ height: popup_height }">
           <!-- 第一个tab 分类-->
           <div class="condition flex_row" v-show="choose_tab == 0">
@@ -83,20 +69,27 @@
               </div>
             </div>
             <div class="grow_1 condition_right">
-              <div
-                class="condition_right_item flex_row condition_left_item rel flex_center_col"
-                v-for="(item, index) in categoryLeft[chooseMenuId - 1].sub_categories"
-                :key="index"
-                :class="index != 19 ? 'border_bottom' : ''"
-              >
-                <span>{{ item.name }}</span>
-                <span class="category_count">{{ item.count }}</span>
-                <van-icon
-                  name="arrow"
-                  color="gray"
-                  class="arrow_right_vant arrow_right_vant_food"
-                  size="14"
-                />
+              <!--!!!
+              1、for循环报错sub_categories属性不存在，此时categoryLeft数组可能为空，
+              用if提前判断
+              2、if不与for放在一层，优化性能
+              -->
+              <div v-if="categoryLeft.length">
+                <div
+                  class="condition_right_item flex_row condition_left_item rel flex_center_col"
+                  :key="index"
+                  v-for="(item, index) in categoryLeft[chooseMenuId - 1].sub_categories"
+                  :class="index != 19 ? 'border_bottom' : ''"
+                >
+                  <span>{{ item.name }}</span>
+                  <span class="category_count"></span>
+                  <van-icon
+                    name="arrow"
+                    color="gray"
+                    class="arrow_right_vant arrow_right_vant_food"
+                    size="14"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -108,7 +101,7 @@
               :key="index"
               class="flex_row padding_15 border_bottom sort_item"
             >
-              <img src="" alt="" />
+              <img src="" alt=""/>
               <span class="font14">{{ item.title }}</span>
             </div>
           </div>
@@ -123,7 +116,7 @@
                   @click="chooseSelectTab('send', index)"
                   :class="item.choose_index ? 'choice' : ''"
                   class="border_all border_radius_3 padding_5_top_bottom flex_center"
-                  >{{ item.title }}</span
+                >{{ item.title }}</span
                 >
               </div>
             </div>
@@ -136,7 +129,7 @@
                   class="border_all border_all_attr border_radius_3 padding_5_top_bottom flex_center"
                   @click="chooseSelectTab('attr', index)"
                   :class="item.choose_index ? 'choice' : ''"
-                  >{{ item.title }}</span
+                >{{ item.title }}</span
                 >
               </div>
             </div>
@@ -162,38 +155,42 @@
 </template>
 
 <script>
-import vueWaterfallEasy from "vue-waterfall-easy";
+import waterFall from "@/components/waterFall.vue";
+import {setStore, getStore, setHistory} from "../../config/mUtils";
+
 import Top from "@/components/Top.vue";
+
 let qs = require("qs");
 
 export default {
-  components: { vueWaterfallEasy, Top },
+  components: {Top, waterFall},
   data() {
     return {
       heightLightTab: -1, //高亮tab
-      backPageName: "",
+      // 瀑布流返回
       shop_start: 0,
       shop_limit: 10,
       shop_done: false, //true加载到最后一页
       imgsArr: [],
       responseData: [],
       popup_height: "auto", //下拉框高度
-      nav_title: this.$route.query.title,
       show: false,
       chooseMenuId: 1, //左侧菜单选中索引
-
+      waterFullBottom: 15, //底部距离下张图片距离
+      waterFullPadding: 10, // 图片左/右间隔 三份
+      columns: 2,
       choose_tab: -1, //当前选中tab
       select_attr_index: -1, //当前选中tab
       categoryLeft: [],
-      selectSendArr: [{ title: "蜂鸟专送", index: 0, img_url: "", choose_index: false }], //配送方式
+      selectSendArr: [{title: "蜂鸟专送", index: 0, img_url: "", choose_index: false}], //配送方式
       selectAttrArr: [
         //商家属性
-        { title: "品牌商家", index: 0, img_url: "", choose_index: false },
-        { title: "外卖保", index: 1, img_url: "", choose_index: false },
-        { title: "准时达", index: 2, img_url: "", choose_index: false },
-        { title: "新店", index: 3, img_url: "", choose_index: false },
-        { title: "在线支付", index: 4, img_url: "", choose_index: false },
-        { title: "开发票", index: 5, img_url: "", choose_index: false },
+        {title: "品牌商家", index: 0, img_url: "", choose_index: false},
+        {title: "外卖保", index: 1, img_url: "", choose_index: false},
+        {title: "准时达", index: 2, img_url: "", choose_index: false},
+        {title: "新店", index: 3, img_url: "", choose_index: false},
+        {title: "在线支付", index: 4, img_url: "", choose_index: false},
+        {title: "开发票", index: 5, img_url: "", choose_index: false},
       ],
       titleArr: [
         //tab
@@ -247,7 +244,14 @@ export default {
       ],
     };
   },
-  computed: {},
+  computed: {
+    nav_title() {
+      return this.$route.query.title;
+    },
+    category() {
+      return this.$route.query.category;
+    },
+  },
   watch: {
     show: function () {
       if (!this.show) {
@@ -259,13 +263,19 @@ export default {
   },
   created() {
     //初始化瀑布流
+    setHistory(this);
     this.getData();
     this.getCategory();
-    this.getBackPageName();
   },
-  mounted() {},
+  /*
+  * created()与mounted()失效：index-food-shop，重新进入food不再触发这两个钩子函数，TODO 原因未分析出来
+  * */
+  activated() {
+    setHistory(this);
+  },
+  mounted() {
+  },
   methods: {
-    //   清空
     clear() {
       for (let i = 0; i < this.selectSendArr.length; i++) {
         this.selectSendArr[i].choose_index = false;
@@ -292,18 +302,31 @@ export default {
     chooseMenuLeft(id) {
       this.chooseMenuId = id;
     },
-    getBackPageName() {
-      this.backPageName = this.$route.query.backPageName || "";
-    },
+
     //获取分类
     getCategory() {
-      var that = this;
+      let that = this;
       this.$axios.get("/api/category").then((res) => {
         that.categoryLeft = res.data;
+        // 提示待添加
+        let toAdd = [
+          {
+            id: 1,
+            sub_id: 2,
+            name: "暂未分类",
+            count: "0",
+            level: "2",
+            image_url: null,
+          },
+        ];
         if (that.categoryLeft.length > 0) {
           that.categoryLeft.forEach((item) => {
             if (item.name == that.nav_title) {
               that.chooseMenuId = item.id;
+            }
+            if (item.sub_categories.length == 0) {
+              toAdd[0].count = item.sub_categories.count;
+              item.sub_categories = toAdd;
             }
           });
         }
@@ -311,40 +334,49 @@ export default {
     },
     //瀑布流 触底加载
     getData() {
-      var that = this;
+      if (this.shop_done) {
+        return;
+      }
+      let that = this;
       let data = qs.stringify({
         start: this.shop_start,
         limit: this.shop_limit,
         category: this.$route.query.category,
       });
+      // 清空瀑布流列长和数组
+      if (this.shop_start == 0) {
+        setStore("arrH", []);
+      }
       this.$axios.post("/api/shop", data).then(function (res) {
         if (res && res.data) {
-          if (res.data.length == 10) {
-            that.shop_start += 10;
+          that.shop_start += that.shop_limit;
+          if (res.data.length == that.shop_limit) {
           } else {
             that.shop_done = true; //最后一页
-            //恰好上次请求十条数据之后 本次0条
-            //!!!数据加载完成 取消瀑布流加载动画，要给瀑布流组件添加 ref="waterfall"
-
-            that.$refs.waterfall.waterfallOver();
-            return;
           }
+          that.$refs.waterFall.changeIsInProcessing(false);
         }
         that.responseData = res.data;
+        that.imgsArr = [];
         that.responseData.forEach((res) => {
-          that.imgsArr = that.imgsArr.concat({
+          that.imgsArr.push({
             src: res.image_path,
-            href: { path: "/shop", query: { restaurant_id: res.id } }, //!!!vueWaterfallEasy瀑布流组件 跳转传参
+            href: {
+              path: "/shop",
+              query: {restaurant_id: res.id},
+            },
             info: res.name,
             score: res.score,
             introduce: res.introduce,
             per_capita: res.per_capita,
             month_sales: res.month_sales,
+            id: res.id,
+            category: res.category,
           });
         });
       });
     },
-    clickFn(event, { index, value }) {
+    clickFn(event, {index, value}) {
       // 阻止a标签跳转
       // event.preventDefault();
       // 只有当点击到图片时才进行操作
@@ -390,12 +422,22 @@ export default {
 </script>
 
 <style>
+.food {
+  height: 700px;
+}
+
 .arrow_right_vant_food {
   right: 5px;
 }
+
+.near_shop_show {
+  height: 700px;
+}
+
 .food .van-nav-bar__arrow {
   position: absolute;
 }
+
 .food_select {
   padding-bottom: 0px !important;
 }
@@ -404,88 +446,111 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
+
 .sort_item {
   padding-left: 0;
   padding-right: 0;
   margin: 0 15px;
 }
+
 .condition_right {
   height: 340px;
   overflow-y: auto;
   width: 50%;
 }
+
 .category_count {
   position: absolute;
   right: 20px;
 }
+
 .icon_category {
   width: 16px;
   height: 16px;
   margin-right: 10px;
 }
+
 .food_container_show {
   flex: 1;
 }
+
 .food_container {
   flex: 1;
   bottom: 0 !important;
 }
+
 .food_container .near_shop_show {
   /* overflow-y: auto; */
   /* padding-top: 10px; */
 }
+
 .food_select_method {
   padding-bottom: 0;
 }
+
 .select_bot_item {
   height: 40px;
 }
+
 .select_bot_item:nth-child(1) {
   margin-right: 10px;
 }
+
 .select_title {
   display: block;
   margin-bottom: 8px;
 }
+
 .border_all {
   width: 30%;
 }
+
 .border_all_attr {
   margin-bottom: 8px;
 }
+
 .condition_left {
   background: #f1f1f1;
   width: 50%;
 }
+
 .condition_right_item {
   margin-left: 10px;
   padding-left: 0 !important;
 }
+
 .condition_left_item {
   padding: 10px 10px;
 }
+
 .arrow_right_food {
   right: 10px;
 }
+
 .food_top {
   z-index: 2100;
   position: relative;
 }
+
 .food_container_top {
   z-index: 2100;
   position: relative;
 }
+
 .van-popup {
   position: absolute;
   /* top: 75px; */
   overflow: hidden !important;
 }
+
 .top_item_line {
   border-right: 1px solid #e4e4e4;
 }
+
 .food_container .van-overlay {
   margin-top: 90px !important;
 }
+
 .vue-waterfall-easy-container .loading .dot {
   background: #1989fa !important;
 }

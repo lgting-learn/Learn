@@ -24,8 +24,14 @@
 <script>
 import TabBottom from "@/components/TabBottom.vue";
 import OrderItem from "@/components/OrderItem.vue";
-import Top from "@/components/Top.vue";
-import { getStore, setStore, isNotBlank, amendHeight } from "../config/mUtils.js";
+import {
+  getStore,
+  setStore,
+  isNotBlank,
+  amendHeight,
+  setHistory,
+} from "../../config/mUtils.js";
+
 const qs = require("qs");
 export default {
   data() {
@@ -44,17 +50,17 @@ export default {
       // loading: false,
       finished: false,
       titleTitle: [
-        { title: "已付款", index: 0 },
-        { title: "待付款", index: 1 },
-        { title: "待评价", index: 2 },
-        { title: "退款 / 售后", index: 3 },
-        { title: "全部", index: -1 },
+        {title: "已付款", index: 0},
+        {title: "待付款", index: 1},
+        {title: "待评价", index: 2},
+        {title: "退款 / 售后", index: 3},
+        {title: "全部", index: -1},
       ],
       nav_title: "订单",
       activeBtm: 2,
     };
   },
-  components: { TabBottom, Top, OrderItem },
+  components: {TabBottom, OrderItem},
   computed: {},
   watch: {},
   methods: {
@@ -76,15 +82,10 @@ export default {
     toUserRate(restaurant_id, id) {
       this.$router.replace({
         path: "/userRate",
-        query: { restaurant_id: restaurant_id, order_id: id },
+        query: {restaurant_id: restaurant_id, order_id: id},
       });
     },
-    toConfirmOrder(id) {
-      this.$router.replace({
-        path: "/confirmOrder",
-        query: { order_id: id, type: "order" },
-      });
-    },
+
     // 不区分订单状态 获取所有订单
     getInitData() {
       let userInfo = getStore("loginUserInfo") && JSON.parse(getStore("loginUserInfo"));
@@ -120,11 +121,12 @@ export default {
       }, 1000);
     },
   },
-  created() {},
+  // 第一次进入页面执行
+  created() {
+  },
+  // 每次进入页面执行
   mounted() {
-    console.log("mounted====");
-    //  $(".order").css("font-size",'30px');
-    // alert('+'+$(".order").css("font-size"))
+    setHistory(this);
     this.getInitData();
     // !!!解决输入法压缩整个页面布局
     amendHeight(this.oldHeight, "order");
@@ -133,9 +135,53 @@ export default {
 </script>
 
 <style>
+
+.van-tabs__line {
+  background-color: #ffc300 !important;
+}
+
+.van-tabs__wrap {
+  height: 30px !important;
+  /* position: relative !important; */
+}
+
+.van-tabs__nav {
+  flex-grow: 0 !important;
+}
+
+.van-tab {
+  font-size: 13px !important;
+  font-weight: bold;
+  /*解决缩小后字体不居中显示问题*/
+  -webkit-transform-origin-x: center !important;
+}
+
+.van-tabs--line {
+  background: #f6f6f6 !important;
+}
+
+.order .arrow_right_vant_order {
+  position: inherit !important;
+}
+
+.order .van-tab .van-tab__text {
+  color: #333;
+  font-size: 14px;
+}
+
+.order .van-tab--active .van-tab__text {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.order .van-tabs__line {
+  width: 20px;
+}
+
 .van-field__clear {
   right: 5px;
 }
+
 .order .van-tab__text--ellipsis {
   overflow: auto !important;
   display: block !important;

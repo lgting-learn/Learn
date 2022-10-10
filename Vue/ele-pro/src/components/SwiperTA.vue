@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import {setHistory} from "../config/mUtils";
+
 export default {
   name: "AddAndReduce",
   props: ["showOrNot"],
@@ -63,9 +65,8 @@ export default {
   methods: {
     turnFood(item, index, index_out) {
       this.$router.replace({
-        path: "/food",
+        name: "food",
         query: {
-          backPageName: "taskaway",
           title: item.title,
           category: (index_out - 1) * 8 + index,
         },
@@ -73,7 +74,7 @@ export default {
     },
   },
   created() {
-    var that = this;
+    let that = this;
     this.$axios.get("/api/classify").then(function (res) {
       that.skeleton_loading = false;
       that.swipeTotal = res.data;
@@ -81,6 +82,7 @@ export default {
   },
   mounted() {
     this.loading = false;
+    setHistory(this);
   },
 };
 </script>
@@ -89,7 +91,7 @@ export default {
 .swiper_taskaweay .swipe_item_ta_small span {
   margin-top: 10px;
 }
-.taskaway_skeleton_top {
+.index_skeleton_top {
   flex-wrap: wrap;
   justify-content: space-between;
   flex: 1;

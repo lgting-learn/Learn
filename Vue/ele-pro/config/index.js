@@ -3,31 +3,56 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const targetIP = 'http://192.168.0.102';
+
+const global = {
+  // true表示生产
+  PRODUCTFLAG: false,
+// 测试ip
+  DEVIP: "192.168.10.106",
+// 生产ip
+  PRODUCTIP: "175.24.234.32",
+  JAVAPORT: "8088",
+// 前端项目端口号
+  VUEPORT: "8086",
+}
+// 后端项目端口号
+
+// 不加() 三元运算返回true
+const targetIP = 'http://' + (global.PRODUCTFLAG ? global.PRODUCTIP : global.DEVIP);
 // wifi ip不固定
-const viewIP = '192.168.0.102';
+const viewIP = global.PRODUCTFLAG ? global.PRODUCTIP : global.DEVIP;
+
 // 手机热点
 // const viewIP ='172.20.10.3';
 module.exports = {
+  // 将global传递给TabBottom.vue
+  global,
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: global.PRODUCTFLAG ? './' : '/',
     proxyTable: {
+      // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
+      // http://localhost:9588/api/abc  => 代理给另一个服务器
+      // 本地的前端  =》 本地的后端  =》 代理我们向另一个服务器发请求 （行得通,代理服务和后端服务之间由于并不经过浏览器没有同源策略的限制，可以直接发送请求）
+      // 本地的前端  =》 另外一个服务器发请求 （跨域 行不通）
       '/api/': {
-        // target: 'http://localhost:8088/',
-        target: targetIP + ':8088/',
-        changeOrigin: true,
+        // 真正访问的api地址
+        target: targetIP + ':' + global.JAVAPORT + '/',
+        changeOrigin: true, // 是否跨域 需要设置此值为true 才可以让本地服务代理我们发出请求
+        // 路径重写
         pathRewrire: {
+          // 假设我们想把 http://localhost:9588/api/abc 变成www.baidu.com/abc 就需要这么做
           '^/api': ''
         }
       }
     },
 
     // Various Dev Server settings
+    // 前端项目运行ip
     host: viewIP,
-    port: 8086, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // 前端项目运行端口
+    port: global.VUEPORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -63,7 +88,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://192.168.0.102:8086/ELE-PEO/',
+    assetsPublicPath: 'http://' + global.PRODUCTFLAG ? global.PRODUCTIP : this.DEVIP + ':' + global.VUEPORT + '/ELE-PEO/',
 
     /**
      * Source Maps

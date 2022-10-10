@@ -1,3 +1,7 @@
+<!--
+添加、减少按钮
+
+-->
 <template>
   <div class='addAndReduce'>
     <div class="flex_row  food_num">
@@ -19,7 +23,7 @@
 </template>
 
 <script>
-var qs = require("qs");
+let qs = require("qs");
 
 export default {
   name: "AddAndReduce",
@@ -35,7 +39,7 @@ export default {
   methods: {
     //改变食品选购数量
     numChange(type, id, restaurant_id) {
-      var that = this;
+      let that = this;
       //获取最新菜单
       let data = qs.stringify({ restaurant_id: this.restaurant_id });
       this.$axios.post("/api/shopFoodClassify", data).then(function(res) {
@@ -79,9 +83,9 @@ export default {
       });
     }, //获取食品总数量
     getFoodsTotal(arr, that) {
-      var num = 0;
-      var price = 0;
-      var amountList = []; //食品结算清单
+      let num = 0;
+      let price = 0;
+      let amountList = []; //食品结算清单
       if (arr.length > 0) {
         arr.forEach(item => {
           if (item.foods.length > 0) {

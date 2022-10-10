@@ -1,5 +1,5 @@
 <template>
-  <div class="order_content common_container common_container">
+  <div class="order_content common_container_order">
     <van-tabs v-model="active" animated @click="clickTab">
       <van-tab v-for="(item, index) in titleTitle" :title="item.title" :key="index">
         <div class="order_detail grow_1">
@@ -61,7 +61,7 @@
                     <span
                       class="flex_center font11_center"
                       @click.stop="toUserRate(item.restaurant_id, item.id)"
-                      >评价</span
+                    >评价</span
                     >
                   </div>
                   <div class="padding_3 border_radius_5 flex_center font12 bg_yellow">
@@ -95,7 +95,13 @@ export default {
       this.$emit("clickTab", index);
     },
     onLoad() {
-      this.$emit("onLoad", index);
+      // this.$emit("onLoad", index);
+    },
+    toConfirmOrder(id) {
+      this.$router.replace({
+        path: "/confirmOrder",
+        query: {order_id: id, type: "order"},
+      });
     },
   },
 };
@@ -103,6 +109,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.common_container_order {
+  position: absolute!important;
+  top: 48px;
+  left: 0;
+  right: 0;
+  bottom: 42px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .auxiliary_div {
   display: none;
   width: 100%;
@@ -112,26 +127,11 @@ export default {
   top: 0;
   z-index: 100;
 }
-.order .arrow_right_vant_order {
-  /* right: 5px; */
-  position: inherit !important;
-  /* top:6px; */
-}
-.order .van-tab .van-tab__text {
-  color: #333;
-  font-size: 14px;
-}
 
-.order .van-tab--active .van-tab__text {
-  font-size: 15px;
-  font-weight: bold;
-}
-.order .van-tabs__line {
-  width: 20px;
-}
 .shop_img_big {
   margin-right: 10px;
 }
+
 .order_content .van-tabs .van-tabs__content {
   top: 30px;
   position: absolute;
@@ -140,105 +140,49 @@ export default {
   bottom: 0px;
   overflow-y: auto !important;
 }
+
 .order_content .van-tabs .van-tabs__wrap {
   flex-grow: 0 !important;
   position: relative;
   height: 30px !important;
   /* height: 200px !important; */
 }
+
 .order_content .van-tabs {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
 }
+
 .order_detail {
   overflow-y: auto !important;
 }
+
 .order_content {
   overflow-y: hidden !important;
   display: flex;
   flex-direction: column;
-}
-.van-field__control::-webkit-input-placeholder {
-  /* WebKit browsers */
-  font-size: 14px !important;
-  -webkit-transform: scale(0.8) !important;
-  /*解决缩小后字体不居中显示问题*/
-  -webkit-transform-origin-x: left !important;
-}
-.van-field__control:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
-  font-size: 14px !important;
-  -webkit-transform: scale(0.8) !important;
-  /*解决缩小后字体不居中显示问题*/
-  -webkit-transform-origin-x: left !important;
-}
-.van-field__control::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  font-size: 14px !important;
-  -webkit-transform: scale(0.8) !important;
-  /*解决缩小后字体不居中显示问题*/
-  -webkit-transform-origin-x: left !important;
-}
-.van-field__control:-ms-input-placeholder {
-  /* Internet Explorer 10+ */
-  font-size: 14px !important;
-  -webkit-transform: scale(0.8) !important;
-  /*解决缩小后字体不居中显示问题*/
-  -webkit-transform-origin-x: left !important;
-}
-.van-search {
-  /* padding: 0.2rem 0.375rem; */
-  height: 42px;
-  position: relative;
-}
-.van-search .van-cell {
-  padding: 0rem 0rem 0rem 0;
-}
-
-.van-search {
-  flex-grow: 0 !important;
 }
 
 .order_item {
   margin-top: 5px !important;
   padding-top: 0 !important;
 }
+
 .order_item_btm span {
   width: 64px;
 }
+
 .border_bottom_order {
   margin-bottom: 10px;
 }
+
 .order_item_top_desc {
   padding-right: 20px;
   justify-content: flex-start;
 }
+
 .appraise {
   right: 0px;
-}
-.van-tabs__line {
-  background-color: #ffc300 !important;
-}
-.van-tabs__wrap {
-  height: 30px !important;
-  /* position: relative !important; */
-}
-.van-tabs__nav {
-  /* position: absolute!important;
-  top: 30px!important;
-  left: 0!important;
-  right: 0!important;
-    background: #f6f6f6; */
-  flex-grow: 0 !important;
-}
-.van-tab {
-  font-size: 12px !important;
-  -webkit-transform: scale(0.8) !important;
-  /*解决缩小后字体不居中显示问题*/
-  -webkit-transform-origin-x: center !important;
-}
-.van-tabs--line {
-  background: #f6f6f6 !important;
 }
 </style>

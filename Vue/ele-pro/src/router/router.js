@@ -3,26 +3,26 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import TabBottom from '@/components/TabBottom'
 //引用页面
-import Taskaway from '../page/taskaway.vue'
-import Search from '../page/search.vue'
-import Order from '../page/order.vue'
-import Mine from '../page/mine.vue'
-import ConfirmOrder from '../page/confirmOrder.vue'
-import Shop from '../page/shop.vue'
-import Food from '../page/food.vue'
-import PersonalCenter from '../page/personalCenter.vue'
+import Index from '../page/index/index.vue'
+import Search from '../page/search/search.vue'
+import Order from '../page/order/order.vue'
+import Mine from '../page/mine/mine.vue'
+import ConfirmOrder from '../page/index/confirmOrder.vue'
+import Shop from '../page/index/shop.vue'
+import Food from '../page/index/food.vue'
+import PersonalCenter from '../page/mine/personalCenter.vue'
 import AddressCreate from '../page/mine/addressCreate.vue'
 import MyAddress from '../page/mine/myAddress.vue'
 import Login from '../page/mine/login.vue'
 import Settings from '../page/mine/settings.vue'
-import UserRate from '../page/userRate.vue'
+import UserRate from '../page/index/userRate.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'taskaway',
-    component: Taskaway,
+    name: 'index',
+    component: Index,
     meta: {
       keepAlive: true // 需要缓存
     }
