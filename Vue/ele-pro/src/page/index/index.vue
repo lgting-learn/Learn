@@ -1,13 +1,14 @@
 <template>
-  <div class="taskaway flex_column fixed_full" id="taskaway" ref="taskaway">
+  <div class="index flex_column fixed_full" id="index" ref="index">
     <div
       class="common_container common_container_task"
       id="common_container_task"
       ref="common_container_task"
     >
-      <SwiperTA ref="swiper_taskaweay" @getSwiperHeight="getSwiperHeight"> </SwiperTA>
+      <SwiperTA ref="swiper_taskaweay" @getSwiperHeight="getSwiperHeight"></SwiperTA>
+      <!-- 骨架图 -->
       <div
-        class="taskaway_skeleton_top flex_row"
+        class="index_skeleton_top flex_row"
         :class="skeleton_loading ? '' : 'display_hidden'"
       >
         <van-skeleton
@@ -22,7 +23,7 @@
       </div>
       <!-- 分割条 -->
       <div
-        class="split taskaway_split"
+        class="split index_split"
         :class="skeleton_loading ? 'display_hidden' : 'display_block'"
       ></div>
       <div
@@ -33,7 +34,7 @@
         <!-- <span>附近商家</span> -->
         <van-notice-bar
           left-icon="volume-o"
-          text="App展示数据均爬取自美团，仅供学习使用。"
+          text="App展示数据爬取自美团，仅供学习使用。"
           color="red"
         />
       </div>
@@ -45,16 +46,17 @@
         item{{ item }}
         <img src="http://p0.meituan.net/waimaipoi/23116ead6885e6883689db8010b5384d52286.jpg" alt="">
       </div> -->
-      <van-loading type="spinner" color="#1989fa" vertical v-if="1 == 2" />
+      <van-loading type="spinner" color="#1989fa" vertical v-if="1 == 2"/>
 
       <waterFall
         :imgsArr="imgsArr"
         :columns="columns"
         :shop_start="shop_start"
         :shop_limit="shop_limit"
+        :nav_title="nav_title"
         ref="waterFall"
         :waterFullBottom="waterFullBottom"
-        :waterFulpadding="waterFulpadding"
+        :waterFullPadding="waterFullPadding"
         @broadcastCell="broadcastCell"
         @getData="getData"
       ></waterFall>
@@ -67,22 +69,21 @@
 <script>
 import SwiperTA from "@/components/SwiperTA.vue";
 import TabBottom from "@/components/TabBottom.vue";
-import Top from "@/components/Top.vue";
 import waterFall from "@/components/waterFall.vue";
 import $ from "jquery";
 
-import { getStore, setStore, isNotBlank, throttle } from "../config/mUtils";
-import { all } from "q";
+import {getStore, setStore, isNotBlank, throttle, setHistory} from "../../config/mUtils";
+import {all} from "q";
 
 let qs = require("qs");
 
 export default {
-  components: { SwiperTA, TabBottom, Top, waterFall },
+  components: {SwiperTA, TabBottom, waterFall},
   data() {
     return {
       isFixed: false,
       offsetTop: 0,
-      items: [{ title: "foo" }, { title: "baz" }],
+      items: [{title: "foo"}, {title: "baz"}],
       skeleton_loading: true, //骨架屏，瀑布流true显示
       swi_height: 0, //轮播图组件高度
       showOrNot: "y",
@@ -93,12 +94,11 @@ export default {
       shop_limit: 10,
       shop_done: false, //true加载到最后一页
       maxHeiDiv: 0,
-      waterFallNums: 0,
       // 瀑布流参数
       columns: 2, // 列数
       imgsArr: [],
       waterFullBottom: 15, //底部距离下张图片距离
-      waterFulpadding: 10, // 图片左/右间隔 三份
+      waterFullPadding: 10, // 图片左/右间隔 三份
     };
   },
   computed: {
@@ -130,18 +130,26 @@ export default {
   //   }
   // },
   methods: {
-    // 获取轮播图高度
+    /**
+     * 功能描述:
+     * @param: null ->
+
+     * @Author: 86183
+     * @Date: 2022-08-21 15:09
+     * @deprecated:
+     */
     getSwiperHeight(height) {
       // this.swi_height = height;
     },
 
-    onClickLeft() {},
+    onClickLeft() {
+    },
     imgErrorFn() {
       //补充
     },
 
     // 使用瀑布流组件的router-link跳转，ios微信预览底部出现工具栏，用replace替代即可解决
-    clickFn(event, { index, value }) {
+    clickFn(event, {index, value}) {
       // 阻止a标签跳转
       event.preventDefault();
       this.$router.replace(value.href);
@@ -153,11 +161,15 @@ export default {
     changeTitle(title) {
       this.nav_title = title;
     },
-
-    //瀑布流 触底加载
+    /**
+     * 功能描述:
+     * @param: null
+     * @Author: 86183
+     * @Date: 2022-08-21 10:39
+     * @deprecated:瀑布流 触底加载
+     */
     getData() {
       if (this.shop_done) {
-        // this.$refs.waterfall.waterfallOver();
         return;
       }
       let that = this;
@@ -169,7 +181,6 @@ export default {
       if (this.shop_start == 0) {
         setStore("arrH", []);
       }
-
       this.$axios.post("/api/shop", data).then(function (res) {
         that.skeleton_loading = false;
         if (res && res.data) {
@@ -187,7 +198,7 @@ export default {
             src: res.image_path,
             href: {
               path: "/shop",
-              query: { restaurant_id: res.id, backPageName: "taskaway" },
+              query: {restaurant_id: res.id,},
             }, //!!!vueWaterfallEasy瀑布流组件 跳转传参
             info: res.name,
             score: res.score,
@@ -195,43 +206,49 @@ export default {
             per_capita: res.per_capita,
             month_sales: res.month_sales,
             id: res.id,
+            category: res.category,
           });
         });
       });
     },
     // 吸顶
     broadcastCell() {
-      var scrollTop =
+      let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       this.isFixed = scrollTop > this.offsetTop ? true : false;
-      // }
     },
   },
   created() {
     this.getData();
+    setHistory(this);
   },
-  mounted() {},
+  mounted() {
+  },
   // 离开当前页面 销毁 未生效 TODO
-  destroyed() {},
+  destroyed() {
+  },
 };
 </script>
 
 <style>
-.taskaway .van-loading {
+.index .van-loading {
   position: fixed !important;
   left: 50%;
   margin-left: -15px;
   z-index: 1000;
 }
-.taskaway {
+
+.index {
   overflow-x: hidden;
   /* height: 1253px; */
 }
-.taskaway.fixed_full {
+
+.index.fixed_full {
   position: relative !important;
 }
+
 .contentItem {
   /* margin-bottom: 47px; */
 
@@ -245,6 +262,7 @@ export default {
   left: 0%;
   z-index: 999;
 }
+
 .skeleton_right_fill {
   background: #f2f3f5;
   width: 100%;
@@ -252,26 +270,30 @@ export default {
   margin: 0 17px;
   margin-top: 20px;
 }
-.taskaway_skeleton_top {
+
+.index_skeleton_top {
   flex-wrap: wrap;
   justify-content: space-between;
   flex: 1;
 }
-.taskaway_skeleton_btm {
+
+.index_skeleton_btm {
   flex: 4;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.taskaway_skeleton_btm .van-skeleton__avatar {
+
+.index_skeleton_btm .van-skeleton__avatar {
   border-radius: 5px;
   width: 80% !important;
   height: 150px !important;
 }
-.taskaway_skeleton_btm .van-skeleton__title {
+
+.index_skeleton_btm .van-skeleton__title {
   margin-left: 16px;
 }
 
-.taskaway .van-skeleton {
+.index .van-skeleton {
   width: 18%;
   display: flex;
   flex-direction: column;
@@ -280,52 +302,65 @@ export default {
   padding-top: 31px;
   padding-bottom: 0;
 }
-.taskaway .van-skeleton__avatar {
+
+.index .van-skeleton__avatar {
   margin-right: 0;
 }
-.taskaway_skeleton_btm .van-skeleton {
+
+.index_skeleton_btm .van-skeleton {
   width: 43%;
 }
-.taskaway_skeleton_btm .van-skeleton__row {
+
+.index_skeleton_btm .van-skeleton__row {
   margin-left: 15px;
   height: 10px;
   margin-top: 10px;
 }
-.taskaway .van-skeleton__content {
+
+.index .van-skeleton__content {
   display: flex;
   justify-content: center;
 }
-.taskaway .van-skeleton__title {
+
+.index .van-skeleton__title {
   margin-right: 0;
 }
 
-.taskaway_skeleton_btm .van-skeleton__content {
+.index_skeleton_btm .van-skeleton__content {
   display: flex;
   flex-direction: column;
 }
+
 .common_container_task {
   display: flex;
   flex-direction: column;
   position: relative !important;
   top: 0 !important;
 }
+
 .task_item_btm {
 }
+
 .task_introduce {
   max-width: 90px;
 }
+
 .task_score {
 }
+
 /* 阻止瀑布流组件滑动 */
-#taskaway .vue-waterfall-easy-scroll {
+#index .vue-waterfall-easy-scroll {
   overflow-y: hidden;
 }
+
 .vue-waterfall-easy-container .loading .dot {
   background: #1989fa !important;
 }
+
 .index_main {
   flex-grow: 1;
 }
+
 .vue-waterfall-easy-container .vue-waterfall-easy a {
   border-radius: 4px;
   overflow: hidden;
@@ -334,15 +369,18 @@ export default {
 .vue-waterfall-easy-container .vue-waterfall-easy a.img-inner-box {
   padding: 0 !important;
 }
+
 .vue-waterfall-easy-container .vue-waterfall-easy > .img-box {
   padding: 0 !important;
   width: 48% !important;
   padding-left: 3% !important;
   padding-bottom: 10px !important;
 }
+
 .vue-waterfall-easy-container {
   /* overflow-y: hidden; */
 }
+
 .vue-waterfall-easy-container .vue-waterfall-easy {
   height: 100%;
   display: flex;
@@ -357,31 +395,39 @@ export default {
   /* height: auto; */
   /* flex: 1; */
 }
-.taskaway_split {
+
+.index_split {
   flex-grow: 0;
 }
+
 .near_shop {
   height: auto;
 }
+
 #near_shop_top {
   display: flex;
   align-items: center;
   width: 100%;
   background: #fff;
 }
+
 #near_shop_top span {
   flex-grow: 0;
 }
+
 /*设置通知栏字体颜色 */
 #near_shop_top * {
   color: #ed6a0c;
 }
+
 #near_shop_top .van-notice-bar {
   flex-grow: 1;
 }
+
 .over {
   padding-bottom: 10px;
 }
+/*test*/
 /* 瀑布流加载样式 */
 .loading.ball-beat {
   /* margin-bottom: 40px; */
